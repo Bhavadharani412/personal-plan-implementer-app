@@ -1,0 +1,6 @@
+{
+  "name": "Bhava 3.0",
+  "description": "Simple and sleek personal focus, streak, and journal tracking system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
