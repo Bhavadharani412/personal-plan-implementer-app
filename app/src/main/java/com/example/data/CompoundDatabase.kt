@@ -36,7 +36,8 @@ data class FocusSession(
     val missionName: String,
     val durationMinutes: Int,
     val xpEarned: Int,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
+    val category: String = "General"
 )
 
 @Entity(tableName = "day_progress")
@@ -54,7 +55,8 @@ data class AppSetting(
     val selectedQuotePreset: String = "Execution creates confidence.",
     val isDarkMode: Boolean = true,
     val examTargetDate: String = "2026-09-01",
-    val notificationEnabled: Boolean = false
+    val notificationEnabled: Boolean = false,
+    val earnedXp: Int = 0
 )
 
 @Dao
@@ -148,7 +150,7 @@ abstract class CompoundDatabase : RoomDatabase() {
                     context.applicationContext,
                     CompoundDatabase::class.java,
                     "compound_os_db"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 instance
             }

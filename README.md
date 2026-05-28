@@ -2,26 +2,27 @@
 > **A Clean, Minimalist Focus, Streak, and Journal Tracking Ecosystem**  
 > Engineered with Kotlin, Jetpack Compose, Material Design 3, and Room SQLite database.
 
-Bhava 3.0 is a highly optimized, single-screen personal accountability system designed to help developers and students maintain consecutive high-intensity study blocks, record daily journal feedback, and chart a 90-day progress habits map.
+Bhava 3.0 is a highly optimized, distraction-free personal accountability system designed to help developers and students maintain consecutive high-intensity study blocks, record daily journal feedback, track time spent on distinct subject categories, and progress through a sequential 90-day habits map.
 
 ---
 
 ## 📱 Visual Wireframe & Mockup Layouts
 
 ### 1. Daily Dashboard Screen Mockup
-The main hub matches the **Cosmic Forest / Mint Green** dynamic color theme, using high-contrast typography, generous padding, and sleek Material cards.
+The main hub operates in a stunning, high-contrast **Deep Burgundy (#550C18) / Burnt Orange (#D86A33)** theme, emphasizing pristine layout spacing, legible typography, and elegant cards.
 
 ```text
 +-------------------------------------------------------------+
 |  BHAVA 3.0                                     [Settings]  |
 |  STREAK & PROGRESS MANAGER                     12:00 UTC    |
+|  Deep Burgundy & Burnt Orange High-Contrast Theme           |
 +-------------------------------------------------------------+
-|  [YOUR STREAK]                                              |
+|  [YOUR ACTIVE STREAK]                                       |
 |  🔥 7 Days Consecutive Habit Streak                         |
 |  "Your momentum is building. Keep the fire burning!"       |
 +-------------------------------------------------------------+
-| [⚡ PROGRESS]         [⏱️ FOCUS HOURS]      [📈 DAILY BASES] |
-|  450 XP Generated    |   4.2 Hrs Today     |   12 Days Logged|
+| [⚡ PROGRESS]         [⏱️ FOCUS HOURS]      [🏆 LEVEL BASES] |
+| 1450 XP Secured      |   4.2 Hrs Today     |   Level 02 Active|
 +-------------------------------------------------------------+
 |  ACTIVE PRIORITY: Write Dentist PWA API                     |
 |  [||||||||||||........ 60%]  | [START TIMER]                |
@@ -30,67 +31,71 @@ The main hub matches the **Cosmic Forest / Mint Green** dynamic color theme, usi
 |  [ ] Design Database Schema          [High]  [Core Eng]   |
 |  [ ] Solve 2 LeetCode questions      [Med]   [DSA]         |
 +-------------------------------------------------------------+
-|  [Dash]    [Plan]    [Focus]    [Journal]    [Streak]       |
+|  [Dash]    [Plan]    [Focus]    [Journal]    [Stats]        |
 +-------------------------------------------------------------+
 ```
 
 ### 2. Live Study Focus Timer Mockup
-An elegant, distraction-free radial countdown design displaying real-time feedback and focus metrics.
+An elegant, distraction-free study cockpit. The radial countdown runs **persisted in a ViewModel-scoped background coroutine**, meaning you can switch between tabs without ever resetting or losing your progress! Includes custom preset buttons and a freeform dial-in box.
 
 ```text
 +-------------------------------------------------------------+
-|  BHAVA 3.0 // FOCUS                        (STANDBY // IDLE)|
+|  BHAVA 3.0 // FOCUS                    (TIMER ACTIVE)       |
 +-------------------------------------------------------------+
-|  STUDY FOCUS BLOCK                                          |
-|  "Solve 2 LeetCode questions"                               |
+|  CURRENT STUDY FOCUS TASK                                   |
+|  "Solve 2 LeetCode questions" (Subject: DSA)                |
 +-------------------------------------------------------------+
 |                                                             |
 |                         . - ~ ~ ~ - .                       |
 |                     . '   : : : :   ' .                     |
 |                   /     .-----------.   \                   |
 |                  /     /   44:59     \   \                  |
-|                 |     |  MINS LEFT   |    |                 |
+|                 |     | FOCUS ACTIVE  |    |                 |
 |                  \     \             /   /                  |
 |                   \     '-----------'   /                   |
 |                     ' .             . '                     |
 |                         ' - _ _ _ - '                       |
 |                                                             |
-|                      STUDY FOCUS TIMER                      |
+|                   BACKGROUND PERSISTED CORE                 |
 |                                                             |
 +-------------------------------------------------------------+
-|  Presets:   [ 25m ]       [ 50m * ]       [ 90m ]           |
-|  XP Reward potential: 500 XP                               |
+|  Presets:   [ 25m ]  [ 45m ]  [ 67m ]  [ 120m ]             |
+|  Or Dial Custom Minutes: [ 55    ]  [ SET ]                 |
+|                                                             |
+|  XP Reward potential: 450 XP                                |
 +-------------------------------------------------------------+
 |  [   CANCEL TIMER   ]               [   PAUSE TIMER   ]     |
 +-------------------------------------------------------------+
-|  [Dash]    [Plan]    [Focus]    [Journal]    [Streak]       |
+|  [Dash]    [Plan]    [Focus]    [Journal]    [Stats]        |
 +-------------------------------------------------------------+
 ```
 
-### 3. Cumulative 90-Day Streak Grid Mockup
-The visual engine maps accountability using three-tier color coding. Every checked square reinforces the daily loop.
+### 3. Cumulative Analytics & Category Breakdown Mockup
+Allows students to track how much time they have spent on individual subjects, and shows sequential progression on the 90-day progress tracker grid.
 
 ```text
 +-------------------------------------------------------------+
 |  BHAVA 3.0 PROGRESS TRACKER                                 |
-|  A 90-day progress habits map to build a consistent streak. |
+|  Chronological sequential daily habit tracker.               |
 +-------------------------------------------------------------+
 |  COMPLETED DAYS BASELINE                                    |
 |  Day 12 of 90 Completed                     13.3% COMPLETE  |
 +-------------------------------------------------------------+
 |  STREAK GRID                                                |
-|  [■][■][■][■][■][■][■][▣][▨][▥][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]|
+|  [■][■][■][■][■][■][■][■][■][■][■][■][ ][ ][ ][ ][ ][ ][ ][ ]|
 |  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]|
 |  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]|
-|  (Click a grid cell to cycle and update habit focus status)  |
-|                                                             |
-|  [■] LIGHT FOCUS   [▣] FULL FOCUS   [▨] HIGH FOCUS          |
+|  (Task completions and deep focus timers auto-tick the list!) |
 +-------------------------------------------------------------+
-|  90-DAY FOCUS PHASES                                        |
-|  [✓] Phase 1: Foundation (Days 1-22): Core data structures. |
-|  [ ] Phase 2: Apps Build (Days 23-45): Write modern apps.   |
-|  [ ] Phase 3: Expansion (Days 46-68): System architecture.  |
-|  [ ] Phase 4: Goals Achieved (Days 69-90): Mock interviews. |
+|  CATEGORY FOCUS BREAKDOWN                                    |
+|  DSA              : ■■■■■■■■■■■■■■■■■■ 3.5 Hrs (54%)        |
+|  Dentist PWA      : ■■■■■■■ 1.2 Hrs (18%)                   |
+|  Core Engineering : ■■■■■ 0.8 Hrs (12%)                     |
+|  AI Learning      : ■■■ 0.5 Hrs (8%)                        |
+|  Cybersecurity    : ■■ 0.4 Hrs (6%)                         |
+|  Journal          : ■ 0.2 Hrs (2%)                          |
++-------------------------------------------------------------+
+|  [Dash]    [Plan]    [Focus]    [Journal]    [Stats]        |
 +-------------------------------------------------------------+
 ```
 
@@ -99,7 +104,7 @@ The visual engine maps accountability using three-tier color coding. Every check
 ## 🛠️ Complete Technical Specification
 
 ### 1. Architectural Blueprint
-Bhava 3.0 implements the **MVVM (Model-View-ViewModel)** architectural pattern. It separates data persistence, business rules, and UI rendering cleanly to ensure reliability and maintainability:
+Bhava 3.0 implements a strict **MVVM (Model-View-ViewModel)** architectural pattern. It separates data persistence, business rules, and UI rendering cleanly to ensure reliability and maintainability:
 
 ```text
                   +--------------------------+
@@ -124,10 +129,10 @@ Bhava 3.0 implements the **MVVM (Model-View-ViewModel)** architectural pattern. 
                   +------------+ +------------+
 ```
 
-*   **View Layer (Jetpack Compose)**: Implements Material Design 3 components, reacting dynamically to stream states emitted from the ViewModel. Includes comprehensive `enableEdgeToEdge()` configuration and clean status layouts.
-*   **ViewModel Layer (`CompoundViewModel`)**: Controls application state using Kotlin `MutableStateFlow` and handles background operations inside safe `viewModelScope` coroutines.
-*   **Repository Layer (`CompoundRepository`)**: Functions as the single source of truth, balancing persistent values stored in Room SQLite with local states.
-*   **Local Storage Layer (Room DB)**: Maintains records for planned tasks, focus session logs, progress grid items, daily journal logs, and dynamic user configurations.
+*   **View Layer (Jetpack Compose)**: Implements custom Material Design 3 components styled using the updated burgundy color theme.
+*   **ViewModel Layer (`CompoundViewModel`)**: Manages the persistent study countdown within `viewModelScope` to maintain state across tab transitions.
+*   **Repository Layer (`CompoundRepository`)**: Functions as the single source of truth, managing interactions with the database.
+*   **Local Storage Layer (Room DB with Migration Support)**: Fully persistent storage for completed items, journal logs, and custom setup options, complete with dynamic schema migration safety.
 
 ---
 
@@ -136,28 +141,25 @@ Bhava 3.0 implements the **MVVM (Model-View-ViewModel)** architectural pattern. 
 ### 📝 Task Planner (`Plan` Tab)
 *   **Categorization Matrix**: Group tasks by specialized categories such as *DSA*, *Core Engineering*, *AI Learning*, *Cybersecurity*, *Dentist PWA*, or *Journal*.
 *   **Priority Levels**: Label tasks by Priority (*Low*, *Medium*, *High*).
-*   **Filtering**: Instantly filter on the-fly using active category tags.
-*   **Dynamic Status**: Toggle task completion checks instantly in the database with cascading visual indicators showing completed, semi-transparent, or active cards.
+*   **Automatic Streak Linkage**: Completing a task automatically increments and check-marks the next consecutive day on the 90-day habits grid.
 
-### ⏱️ Custom Study Timer (`Focus` Tab)
-*   **Concentric Rings Canvas**: Renders a visually striking radial progress interface utilizing clean mathematical canvas dashes and background arches.
-*   **Duration Presets**: Quick preset buttons configured to standard focus blocks (25 mins, 50 mins, 90 mins).
-*   **XP Rewards**: Earns scaled experience points (XP) based on study minutes completed. Standalone sessions automatically log as general Focus blocks.
+### ⏱️ Persistent Study Timer (`Focus` Tab)
+*   **ViewModel-Scoped Timer**: Runs perfectly in the background even when users browse other screens.
+*   **Vibrant Presets**: Clean control buttons set for exactly **`25m`**, **`45m`**, **`67m`**, and **`120m`** pomodoros.
+*   **Custom Dial Input**: Outline text box allowing freeform minutes specification (1 to 480 mins).
+*   **XP Balance Protection**: User XP is saved permanently in settings, eliminating negative feedback when completing tasks and later deleting/archiving them.
 
 ### 📓 Daily Reflection Log (`Journal` Tab)
 *   **Structured Fields**:
     *   Accomplished goals (*What did you accomplish today?*)
     *   Blockers & friction (*What blockers / friction did you face today?*)
     *   Optimizations (*What can you improve tomorrow?*)
-    *   Markdown lessons learned archive.
-    *   Dynamic wins comma-separated list.
-*   **Energy Level Dial**: Sliding indicator scoring daily mental stamina on a scale from 1 to 5.
-*   **Expandable History**: Chronological reverse-sorted history grid of entries complete with a slide-up inspection detail card.
+    *   Wins and mood-o-meter dials.
+*   **Persistent XP Reward**: Logs secure +100 XP to account setting balance upon submission.
 
-### 📊 Streak Analytics (`Streak` Tab)
-*   **Interactive grid**: Change study baseline density (None -> Light -> Full -> High Focus) dynamically by tap commands.
-*   **Milestone Phases**: Keep track of structured 90-day progress metrics spanning 4 foundation modules.
-*   **Subject Practice Progress**: Dynamic visual percentage bars reflecting overall course progress aligned with finished developer tasks.
+### 📊 Streak Analytics & Focus Hours (`Stats` Tab)
+*   **Sequential Streak Advancement**: Prompts consecutive habit indicators to move forward in perfect historical order on any logged focus block, journal entry, or task check.
+*   **Category-wise Breakdown**: Visualizes focus hours partitioned across individual modules (DSA, Dentist PWA, AI Learning, etc.) in a beautifully rendered live bar scale.
 
 ---
 
@@ -179,4 +181,3 @@ To execute the unit and Robolectric tests:
 ```bash
 gradle :app:testDebugUnitTest
 ```
-

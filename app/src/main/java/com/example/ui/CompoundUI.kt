@@ -45,7 +45,7 @@ fun CompoundApp(viewModel: CompoundViewModel) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = DarkForestGreen,
+        containerColor = DarkBackground,
         topBar = {
             HeaderBar()
         },
@@ -74,17 +74,17 @@ fun CompoundApp(viewModel: CompoundViewModel) {
                         .zIndex(99f)
                 ) {
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = AccentGreen),
-                        shape = RoundedCornerShape(12.dp),
-                        border = BorderStroke(1.dp, LightMintGreen.copy(alpha = 0.3f)),
-                        elevation = CardDefaults.cardElevation(8.dp)
+                        colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                        shape = RoundedCornerShape(24.dp),
+                        border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.2f)),
+                        elevation = CardDefaults.cardElevation(6.dp)
                     ) {
                         Row(
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 14.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
-                            Icon(Icons.Default.Info, contentDescription = "Alert", tint = LightMintGreen)
+                            Icon(Icons.Default.Info, contentDescription = "Alert", tint = AccentGreen)
                             Text(
                                 text = msg,
                                 style = Typography.bodyMedium,
@@ -111,7 +111,7 @@ fun CompoundApp(viewModel: CompoundViewModel) {
 @Composable
 fun HeaderBar() {
     Surface(
-        color = DarkForestGreen,
+        color = DarkBackground,
         border = BorderStroke(0.dp, Color.Transparent),
         modifier = Modifier
             .statusBarsPadding()
@@ -130,18 +130,18 @@ fun HeaderBar() {
                     text = "Bhava 3.0",
                     style = Typography.titleLarge.copy(
                         fontFamily = FontFamily.SansSerif,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 22.sp,
                         letterSpacing = (-0.5).sp
                     ),
-                    color = LightMintGreen
+                    color = DarkForestGreen
                 )
                 Text(
                     text = "STREAK & PROGRESS MANAGER",
                     style = Typography.labelSmall.copy(
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        letterSpacing = 1.5.sp
+                        fontSize = 9.sp,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 1.2.sp
                     ),
                     color = MutedText
                 )
@@ -159,21 +159,21 @@ fun HeaderBar() {
                     Icon(
                         imageVector = Icons.Default.Notifications,
                         contentDescription = "Notifications",
-                        tint = LightMintGreen
+                        tint = DarkForestGreen
                     )
                 }
                 Box(
                     modifier = Modifier
                         .size(36.dp)
                         .clip(RoundedCornerShape(50))
-                        .background(AccentGreen.copy(alpha = 0.3f))
-                        .border(1.dp, AccentGreen, RoundedCornerShape(50)),
+                        .background(AccentGreen.copy(alpha = 0.12f))
+                        .border(1.dp, AccentGreen.copy(alpha = 0.4f), RoundedCornerShape(50)),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "XP",
                         style = Typography.labelSmall,
-                        color = GoldXPAccent,
+                        color = AccentGreen,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -188,17 +188,19 @@ fun BottomNavBar(
     onTabSelected: (String) -> Unit
 ) {
     Surface(
-        color = DarkForestGreen,
-        tonalElevation = 8.dp,
-        border = BorderStroke(1.dp, DarkBorder.copy(alpha = 0.5f)),
+        color = DarkSurfaceElevated,
+        tonalElevation = 6.dp,
+        border = BorderStroke(1.dp, DarkBorder),
+        shape = RoundedCornerShape(24.dp),
         modifier = Modifier
             .navigationBarsPadding()
+            .padding(horizontal = 16.dp, vertical = 12.dp)
             .fillMaxWidth()
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -215,7 +217,6 @@ fun BottomNavBar(
                 val active = currentTab == route
                 Column(
                     modifier = Modifier
-                        .weight(1f)
                         .clickable(onClick = { onTabSelected(route) })
                         .padding(vertical = 4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -224,7 +225,7 @@ fun BottomNavBar(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
-                            .background(if (active) AccentGreen else Color.Transparent)
+                            .background(if (active) AccentGreen.copy(alpha = 0.12f) else Color.Transparent)
                             .padding(horizontal = 12.dp, vertical = 6.dp),
                         contentAlignment = Alignment.Center
                     ) {
@@ -234,14 +235,16 @@ fun BottomNavBar(
                             Icon(
                                 imageVector = icon,
                                 contentDescription = label,
-                                tint = if (active) LightMintGreen else MutedText,
+                                tint = if (active) AccentGreen else MutedText,
                                 modifier = Modifier.size(20.dp)
                             )
+                            Spacer(modifier = Modifier.height(2.dp))
                             Text(
                                 text = label,
                                 style = Typography.labelSmall,
-                                color = if (active) LightMintGreen else MutedText,
-                                fontSize = 10.sp
+                                color = if (active) AccentGreen else MutedText,
+                                fontSize = 10.sp,
+                                fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal
                             )
                         }
                     }
@@ -267,149 +270,209 @@ fun DashboardScreen(viewModel: CompoundViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(18.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
-        // Welcome Shield Card
+        // Hero Streak Momentum Card (Dark Espresso background #473C33, white text #FFFFFF)
         item {
             Card(
-                colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.2f)),
-                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.4f)),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(3.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier.padding(24.dp)
                 ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "YOUR STREAK",
-                            style = Typography.labelSmall.copy(
-                                fontSize = 10.sp,
-                                letterSpacing = 1.5.sp,
-                                fontWeight = FontWeight.SemiBold
-                            ),
-                            color = MutedText
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = String.format(Locale.US, "Level %02d", level),
-                                style = Typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                                color = WhiteText
+                                text = "CURRENT STREAK",
+                                style = Typography.labelSmall.copy(
+                                    fontSize = 11.sp,
+                                    letterSpacing = 1.8.sp,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                color = Color.White.copy(alpha = 0.65f)
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = String.format(Locale.US, "Level %02d Active", level),
+                                style = Typography.headlineMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 24.sp,
+                                    letterSpacing = (-0.5).sp
+                                ),
+                                color = Color.White
                             )
                         }
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "$xp XP earned total",
-                            style = Typography.labelSmall,
-                            color = GoldXPAccent,
-                            fontWeight = FontWeight.Medium
-                        )
+
+                        // Circular streak flame count
+                        Box(
+                            modifier = Modifier
+                                .size(58.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(Color.White.copy(alpha = 0.12f))
+                                .border(1.dp, Color.White.copy(alpha = 0.25f), RoundedCornerShape(16.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = "🔥 $streak",
+                                    style = Typography.titleLarge.copy(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = "DAYS",
+                                    style = Typography.labelSmall.copy(fontSize = 8.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
+                                    color = Color.White.copy(alpha = 0.7f)
+                                )
+                            }
+                        }
                     }
 
-                    // Streak block matching style:
-                    // h-12 w-12 rounded-xl bg-[#0F2E15] border border-[#2F6B3B] flex flex-col items-center justify-center
-                    Box(
-                        modifier = Modifier
-                            .size(54.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(DarkForestGreen)
-                            .border(1.dp, AccentGreen, RoundedCornerShape(12.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "$streak",
-                                style = Typography.titleLarge.copy(fontSize = 18.sp, fontWeight = FontWeight.Bold),
-                                color = WhiteText
-                            )
-                            Text(
-                                text = "STREAK",
-                                style = Typography.labelSmall.copy(fontSize = 8.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
-                                color = MutedText
-                            )
-                        }
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Motivational phrase depending on streak momentum
+                    val momentumMessage = when {
+                        streak == 0 -> "Let's log a study block or task to start today's habit spark!"
+                        streak < 3 -> "Your momentum is starting. Keep the flame glowing!"
+                        streak < 7 -> "You are building serious momentum. Stay dedicated!"
+                        else -> "Incredible! 7+ days of deep accountability. Keep pushing!"
                     }
+                    Text(
+                        text = momentumMessage,
+                        style = Typography.bodyMedium.copy(fontSize = 14.sp),
+                        color = Color.White.copy(alpha = 0.9f)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Level XP Indicator inside hero card
+                    val progressMax = 1000
+                    val currentLevelXp = xp % progressMax
+                    val displayLvlXp = currentLevelXp.coerceAtLeast(0)
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        Text(
+                            text = "$xp / $progressMax XP SECURED",
+                            style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                            color = Color.White.copy(alpha = 0.7f)
+                        )
+                        Text(
+                            text = "${(displayLvlXp.toFloat() / progressMax * 100).toInt()}%",
+                            style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                            color = Color.White
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
+                    LinearProgressIndicator(
+                        progress = { displayLvlXp.toFloat() / progressMax },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(6.dp)
+                            .clip(RoundedCornerShape(3.dp)),
+                        color = SuccessGreen,
+                        trackColor = Color.White.copy(alpha = 0.15f)
+                    )
                 }
             }
         }
 
-        // Stats grid
+        // Secondary focus metrics in floating soft cards (#FFFFFF surface, #E7DED2 borders)
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 // Focus hours
                 Card(
                     modifier = Modifier.weight(1f),
-                    colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.15f)),
-                    border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.35f)),
-                    shape = RoundedCornerShape(12.dp)
+                    colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                    border = BorderStroke(1.dp, DarkBorder),
+                    shape = RoundedCornerShape(24.dp),
+                    elevation = CardDefaults.cardElevation(2.dp)
                 ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text("FOCUS HOURS", style = Typography.labelSmall, color = MutedText)
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(String.format(Locale.US, "%.1f Hrs", focusHrs), style = Typography.headlineMedium, color = LightMintGreen)
+                    Column(modifier = Modifier.padding(18.dp)) {
+                        Text("FOCUS HOURS", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = String.format(Locale.US, "%.1f Hrs", focusHrs),
+                            style = Typography.headlineMedium.copy(fontWeight = FontWeight.Bold, fontSize = 22.sp),
+                            color = AccentGreen
+                        )
                     }
                 }
 
-                // XP Progress
+                // XP Progress Secondary Overview
                 Card(
-                    modifier = Modifier.weight(1.5f),
-                    colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.15f)),
-                    border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.35f)),
-                    shape = RoundedCornerShape(12.dp)
+                    modifier = Modifier.weight(1.2f),
+                    colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                    border = BorderStroke(1.dp, DarkBorder),
+                    shape = RoundedCornerShape(24.dp),
+                    elevation = CardDefaults.cardElevation(2.dp)
                 ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text("TOTAL XP", style = Typography.labelSmall, color = MutedText)
-                        Spacer(modifier = Modifier.height(4.dp))
-                        val progressMax = 1000
-                        val currentLevelXp = xp % progressMax
-                        val displayLvlXp = currentLevelXp.coerceAtLeast(0)
+                    Column(modifier = Modifier.padding(18.dp)) {
+                        Text("SAGE GOLD LEVEL", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Spacer(modifier = Modifier.height(6.dp))
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.Bottom
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
                         ) {
-                            Text("$xp", style = Typography.headlineMedium, color = GoldXPAccent)
-                            Text("$displayLvlXp / $progressMax XP", style = Typography.labelSmall, color = MutedText)
+                            Box(
+                                modifier = Modifier
+                                    .size(10.dp)
+                                    .clip(RoundedCornerShape(50))
+                                    .background(GoldXPAccent)
+                            )
+                            Text(
+                                text = "Grade ${String.format(Locale.US, "%02d", level)}",
+                                style = Typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                                color = WhiteText
+                            )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        LinearProgressIndicator(
-                            progress = { displayLvlXp.toFloat() / progressMax },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(4.dp)
-                                .clip(RoundedCornerShape(2.dp)),
-                            color = LightMintGreen,
-                            trackColor = DarkForestGreen
-                        )
                     }
                 }
             }
         }
 
-        // Active priority selection
+        // Active study/priority action layout
         item {
             Card(
-                colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.15f)),
-                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.35f)),
-                shape = RoundedCornerShape(12.dp)
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(2.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("ACTIVE PRIORITY", style = Typography.labelSmall, color = MutedText)
-                    Spacer(modifier = Modifier.height(8.dp))
+                Column(modifier = Modifier.padding(20.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("ACTIVE PRIORITY", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(AccentGreen.copy(alpha = 0.12f))
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
+                        ) {
+                            Text("CORE", style = Typography.labelSmall.copy(fontSize = 9.sp), color = AccentGreen)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
                     if (incompleteTasks.isNotEmpty()) {
                         val activeTask = incompleteTasks.first()
                         Row(
@@ -418,26 +481,41 @@ fun DashboardScreen(viewModel: CompoundViewModel) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(activeTask.title, style = Typography.titleLarge, color = WhiteText)
-                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = activeTask.title,
+                                    style = Typography.titleMedium.copy(fontWeight = FontWeight.SemiBold, fontSize = 17.sp),
+                                    color = WhiteText
+                                )
+                                Spacer(modifier = Modifier.height(6.dp))
                                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    Badge(containerColor = AccentGreen, contentColor = WhiteText) {
-                                        Text(activeTask.priority, style = Typography.labelSmall, modifier = Modifier.padding(2.dp))
+                                    Box(
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(6.dp))
+                                            .background(GoldXPAccent.copy(alpha = 0.15f))
+                                            .padding(horizontal = 6.dp, vertical = 2.dp)
+                                    ) {
+                                        Text(activeTask.priority, style = Typography.labelSmall.copy(fontSize = 9.sp), color = DarkForestGreen)
                                     }
-                                    Badge(containerColor = DarkSurfaceElevated, contentColor = LightMintGreen) {
-                                        Text(activeTask.category, style = Typography.labelSmall, modifier = Modifier.padding(2.dp))
+                                    Box(
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(6.dp))
+                                            .background(DarkBackground)
+                                            .padding(horizontal = 6.dp, vertical = 2.dp)
+                                    ) {
+                                        Text(activeTask.category, style = Typography.labelSmall.copy(fontSize = 9.sp), color = MutedText)
                                     }
                                 }
                             }
+                            Spacer(modifier = Modifier.width(12.dp))
                             Button(
                                 onClick = {
                                     viewModel.setSelectedFocusTask(activeTask)
                                     viewModel.selectTab("FOCUS")
                                 },
-                                colors = ButtonDefaults.buttonColors(containerColor = LightMintGreen),
+                                colors = ButtonDefaults.buttonColors(containerColor = DarkForestGreen),
                                 shape = RoundedCornerShape(12.dp)
                             ) {
-                                Text("START TIMER", style = Typography.labelSmall, color = DarkForestGreen)
+                                Text("START", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                             }
                         }
                     } else {
@@ -448,7 +526,7 @@ fun DashboardScreen(viewModel: CompoundViewModel) {
                                 .padding(vertical = 12.dp)
                         ) {
                             Text(
-                                "No items in your plan.",
+                                "No items matching active priority.",
                                 style = Typography.bodyMedium,
                                 color = MutedText,
                                 textAlign = TextAlign.Center
@@ -456,10 +534,10 @@ fun DashboardScreen(viewModel: CompoundViewModel) {
                             Spacer(modifier = Modifier.height(8.dp))
                             Button(
                                 onClick = { viewModel.selectTab("PLANNER") },
-                                colors = ButtonDefaults.buttonColors(containerColor = LightMintGreen),
+                                colors = ButtonDefaults.buttonColors(containerColor = AccentGreen),
                                 shape = RoundedCornerShape(12.dp)
                             ) {
-                                Text("ADD TO PLAN", style = Typography.labelSmall, color = DarkForestGreen)
+                                Text("ADD TO PLAN", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                             }
                         }
                     }
@@ -467,7 +545,7 @@ fun DashboardScreen(viewModel: CompoundViewModel) {
             }
         }
 
-        // Today's Plan
+        // Today's Plan listing
         item {
             Column {
                 Row(
@@ -475,27 +553,27 @@ fun DashboardScreen(viewModel: CompoundViewModel) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("TODAY'S PLAN", style = Typography.labelMedium, color = LightMintGreen)
+                    Text("TODAY'S PLAN", style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp), color = DarkForestGreen)
                     TextButton(onClick = { viewModel.selectTab("PLANNER") }) {
-                        Text("VIEW ALL", style = Typography.labelSmall, color = MutedText)
+                        Text("VIEW ALL", style = Typography.labelSmall, color = AccentGreen)
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
                 if (incompleteTasks.isEmpty()) {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        color = DarkForestGreen.copy(alpha = 0.5f),
-                        border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.3f)),
-                        shape = RoundedCornerShape(12.dp)
+                        color = DarkSurfaceElevated,
+                        border = BorderStroke(1.dp, DarkBorder),
+                        shape = RoundedCornerShape(24.dp)
                     ) {
                         Column(
-                            modifier = Modifier.padding(16.dp),
+                            modifier = Modifier.padding(24.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Icon(Icons.Default.Check, contentDescription = "Clear", tint = SuccessGreen, modifier = Modifier.size(32.dp))
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Icon(Icons.Default.Check, contentDescription = "Clear", tint = SuccessGreen, modifier = Modifier.size(36.dp))
+                            Spacer(modifier = Modifier.height(10.dp))
                             Text(
-                                "Today's Plan is Cleared.\nSelect ADD TO PLAN or Quick Add to add a task.",
+                                "Today's Plan is completed!\nSelect ADD TO PLAN to outline new milestones.",
                                 style = Typography.bodyMedium,
                                 color = MutedText,
                                 textAlign = TextAlign.Center
@@ -506,52 +584,55 @@ fun DashboardScreen(viewModel: CompoundViewModel) {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         incompleteTasks.take(3).forEach { task ->
                             Card(
-                                colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.1f)),
-                                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.3f)),
-                                shape = RoundedCornerShape(12.dp)
+                                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                                border = BorderStroke(1.dp, DarkBorder),
+                                shape = RoundedCornerShape(24.dp),
+                                elevation = CardDefaults.cardElevation(1.dp)
                             ) {
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(12.dp),
+                                        .padding(14.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.SpaceBetween
-                                  ) {
-                                      Row(
-                                          verticalAlignment = Alignment.CenterVertically,
-                                          horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                          modifier = Modifier.weight(1f)
-                                      ) {
-                                          Icon(
-                                              imageVector = Icons.Default.List,
-                                              contentDescription = "Task",
-                                              tint = LightMintGreen
-                                          )
-                                          Text(
-                                              text = task.title,
-                                              style = Typography.bodyLarge,
-                                              color = WhiteText,
-                                              maxLines = 1,
-                                              overflow = TextOverflow.Ellipsis
-                                          )
-                                      }
-                                      Checkbox(
-                                          checked = task.isCompleted,
-                                          onCheckedChange = { viewModel.updateTaskCompletion(task, it) },
-                                          colors = CheckboxDefaults.colors(
-                                              checkedColor = SuccessGreen,
-                                              uncheckedColor = LightMintGreen
-                                          )
-                                      )
-                                  }
-                              }
-                          }
-                      }
-                  }
-              }
-          }
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                        modifier = Modifier.weight(1f)
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .size(8.dp)
+                                                .clip(RoundedCornerShape(50))
+                                                .background(if (task.priority.uppercase() == "HIGH") GoldXPAccent else SuccessGreen)
+                                        )
+                                        Text(
+                                            text = task.title,
+                                            style = Typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                                            color = WhiteText,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
+                                    Checkbox(
+                                        checked = task.isCompleted,
+                                        onCheckedChange = { viewModel.updateTaskCompletion(task, it) },
+                                        colors = CheckboxDefaults.colors(
+                                            checkedColor = SuccessGreen,
+                                            uncheckedColor = MutedText.copy(alpha = 0.5f),
+                                            checkmarkColor = Color.White
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        // Quote Preset Block
+        // Daily Inspiration Quote Block
         item {
             Box(
                 modifier = Modifier
@@ -590,20 +671,24 @@ fun PlannerScreen(viewModel: CompoundViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(18.dp)
         ) {
             Text(
                 text = "PLANNER",
-                style = Typography.labelLarge,
-                color = LightMintGreen
+                style = Typography.labelLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.8.sp
+                ),
+                color = DarkForestGreen
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
+            // Category filters horizontally scrollable
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .horizontalScroll(rememberScrollState())
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 categoriesList.forEach { cat ->
@@ -611,22 +696,22 @@ fun PlannerScreen(viewModel: CompoundViewModel) {
                     Button(
                         onClick = { selectedCategoryFilter = cat },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isActive) LightMintGreen else AccentGreen.copy(alpha = 0.15f)
+                            containerColor = if (isActive) DarkForestGreen else DarkSurfaceElevated
                         ),
-                        border = BorderStroke(1.dp, if (isActive) LightMintGreen else AccentGreen.copy(alpha = 0.4f)),
-                        shape = RoundedCornerShape(12.dp),
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
+                        border = BorderStroke(1.dp, if (isActive) DarkForestGreen else DarkBorder),
+                        shape = RoundedCornerShape(14.dp),
+                        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp)
                     ) {
                         Text(
                             text = cat.uppercase(),
-                            style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                            color = if (isActive) DarkForestGreen else MutedText
+                            style = Typography.labelSmall.copy(fontWeight = if (isActive) FontWeight.Bold else FontWeight.Medium),
+                            color = if (isActive) Color.White else MutedText
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(14.dp))
 
             if (filteredTasks.isEmpty()) {
                 Box(
@@ -637,23 +722,24 @@ fun PlannerScreen(viewModel: CompoundViewModel) {
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(24.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Edit,
                             contentDescription = "Empty",
-                            tint = AccentGreen,
-                            modifier = Modifier.size(64.dp)
+                            tint = MutedText.copy(alpha = 0.5f),
+                            modifier = Modifier.size(54.dp)
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = "PLANNER IS EMPTY",
-                            style = Typography.labelLarge,
-                            color = LightMintGreen
+                            text = "NO MILESTONES DEFINED",
+                            style = Typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                            color = DarkForestGreen
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Add your first task to get started on your plan.",
+                            text = "Add custom task tags or milestones using the float action below.",
                             style = Typography.bodyMedium,
                             color = MutedText,
                             textAlign = TextAlign.Center
@@ -663,24 +749,25 @@ fun PlannerScreen(viewModel: CompoundViewModel) {
             } else {
                 LazyColumn(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     items(filteredTasks) { task ->
                         Card(
                             colors = CardDefaults.cardColors(
-                                containerColor = if (task.isCompleted) AccentGreen.copy(alpha = 0.05f) else AccentGreen.copy(alpha = 0.15f)
+                                containerColor = if (task.isCompleted) SuccessGreen.copy(alpha = 0.12f) else DarkSurfaceElevated
                             ),
                             border = BorderStroke(
                                 1.dp,
-                                if (task.isCompleted) AccentGreen.copy(alpha = 0.2f) else AccentGreen.copy(alpha = 0.4f)
+                                if (task.isCompleted) SuccessGreen.copy(alpha = 0.3f) else DarkBorder
                             ),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(24.dp),
+                            elevation = CardDefaults.cardElevation(if (task.isCompleted) 0.dp else 2.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(12.dp),
+                                    .padding(16.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
@@ -694,31 +781,50 @@ fun PlannerScreen(viewModel: CompoundViewModel) {
                                         onCheckedChange = { viewModel.updateTaskCompletion(task, it) },
                                         colors = CheckboxDefaults.colors(
                                             checkedColor = SuccessGreen,
-                                            uncheckedColor = LightMintGreen
+                                            uncheckedColor = MutedText.copy(alpha = 0.5f),
+                                            checkmarkColor = Color.White
                                         )
                                     )
                                     Column {
                                         Text(
                                             text = task.title,
-                                            style = Typography.bodyLarge,
+                                            style = Typography.bodyLarge.copy(
+                                                fontWeight = FontWeight.Medium,
+                                                fontSize = 16.sp
+                                            ),
                                             color = if (task.isCompleted) MutedText else WhiteText,
                                             textDecoration = if (task.isCompleted) TextDecoration.LineThrough else null,
                                             maxLines = 2,
                                             overflow = TextOverflow.Ellipsis
                                         )
-                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Spacer(modifier = Modifier.height(6.dp))
                                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                            Badge(
-                                                containerColor = if (task.priority == "P0") DangerRed else AccentGreen,
-                                                contentColor = WhiteText
+                                            Box(
+                                                modifier = Modifier
+                                                    .clip(RoundedCornerShape(6.dp))
+                                                    .background(
+                                                        if (task.priority.uppercase() == "P0") GoldXPAccent.copy(alpha = 0.15f)
+                                                        else AccentGreen.copy(alpha = 0.1f)
+                                                    )
+                                                    .padding(horizontal = 6.dp, vertical = 2.dp)
                                             ) {
-                                                Text(task.priority, style = Typography.labelSmall)
+                                                Text(
+                                                    text = task.priority,
+                                                    style = Typography.labelSmall.copy(fontSize = 9.sp, fontWeight = FontWeight.Bold),
+                                                    color = if (task.priority.uppercase() == "P0") DarkForestGreen else AccentGreen
+                                                )
                                             }
-                                            Badge(
-                                                containerColor = DarkForestGreen,
-                                                contentColor = LightMintGreen
+                                            Box(
+                                                modifier = Modifier
+                                                    .clip(RoundedCornerShape(6.dp))
+                                                    .background(DarkBackground)
+                                                    .padding(horizontal = 6.dp, vertical = 2.dp)
                                             ) {
-                                                Text(task.category, style = Typography.labelSmall)
+                                                Text(
+                                                    text = task.category,
+                                                    style = Typography.labelSmall.copy(fontSize = 9.sp),
+                                                    color = MutedText
+                                                )
                                             }
                                         }
                                     }
@@ -732,7 +838,7 @@ fun PlannerScreen(viewModel: CompoundViewModel) {
                                         onClick = { taskToEdit = task },
                                         modifier = Modifier.minimumInteractiveComponentSize()
                                     ) {
-                                        Icon(Icons.Default.Edit, contentDescription = "Edit", tint = LightMintGreen)
+                                        Icon(Icons.Default.Edit, contentDescription = "Edit", tint = AccentGreen)
                                     }
                                     IconButton(
                                         onClick = { viewModel.deleteTask(task) },
@@ -750,12 +856,12 @@ fun PlannerScreen(viewModel: CompoundViewModel) {
 
         FloatingActionButton(
             onClick = { showAddTaskDialog = true },
-            containerColor = LightMintGreen,
-            contentColor = DarkForestGreen,
-            shape = RoundedCornerShape(16.dp),
+            containerColor = DarkForestGreen,
+            contentColor = Color.White,
+            shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp)
+                .padding(bottom = 90.dp, end = 18.dp) // Offset slightly up from the floating bottom bar
                 .testTag("add_task_fab")
         ) {
             Icon(Icons.Default.Add, contentDescription = "Add Task")
@@ -799,46 +905,46 @@ fun TaskFormDialog(
 
     Dialog(onDismissRequest = onDismiss) {
         Card(
-            colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
-            border = BorderStroke(1.dp, LightMintGreen),
-            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+            border = BorderStroke(1.dp, DarkBorder),
+            shape = RoundedCornerShape(24.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
             Column(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(20.dp)
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
-                    text = if (initialTask == null) "ADD NEW TASK" else "EDIT TASK",
-                    style = Typography.labelLarge,
-                    color = LightMintGreen,
+                    text = if (initialTask == null) "NEW WORKSTREAM ITEM" else "REDEFINE SYSTEM TASK",
+                    style = Typography.labelLarge.copy(fontWeight = FontWeight.Bold, letterSpacing = 1.sp),
+                    color = DarkForestGreen,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Column {
-                    Text("TASK NAME", style = Typography.labelSmall, color = MutedText)
+                    Text("TITLE / TARGET", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
                     Spacer(modifier = Modifier.height(4.dp))
                     OutlinedTextField(
                         value = title,
                         onValueChange = { title = it },
                         modifier = Modifier.fillMaxWidth(),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = LightMintGreen,
-                            unfocusedBorderColor = AccentGreen,
+                            focusedBorderColor = AccentGreen,
+                            unfocusedBorderColor = DarkBorder,
                             focusedTextColor = WhiteText,
                             unfocusedTextColor = WhiteText
                         ),
-                        placeholder = { Text("e.g. Implement Dijkstra Algorithm", color = MutedText) }
+                        placeholder = { Text("e.g. Architect Core Spanner Schema", color = MutedText.copy(alpha = 0.5f)) }
                     )
                 }
 
                 Column {
-                    Text("PRIORITY LEVEL", style = Typography.labelSmall, color = MutedText)
+                    Text("PRIORITY CATEGORY", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -850,14 +956,15 @@ fun TaskFormDialog(
                                 onClick = { priority = p },
                                 modifier = Modifier.weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (isSelected) LightMintGreen else DarkSurfaceElevated
+                                    containerColor = if (isSelected) DarkForestGreen else DarkBackground
                                 ),
-                                shape = RoundedCornerShape(8.dp)
+                                border = BorderStroke(1.dp, if (isSelected) DarkForestGreen else DarkBorder),
+                                shape = RoundedCornerShape(12.dp)
                             ) {
                                 Text(
-                                    p,
-                                    style = Typography.labelSmall,
-                                    color = if (isSelected) DarkForestGreen else WhiteText
+                                    text = p,
+                                    style = Typography.labelSmall.copy(fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium),
+                                    color = if (isSelected) Color.White else MutedText
                                 )
                             }
                         }
@@ -865,7 +972,7 @@ fun TaskFormDialog(
                 }
 
                 Column {
-                    Text("CATEGORY", style = Typography.labelSmall, color = MutedText)
+                    Text("KNOWLEDGE STREAM", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
                     Spacer(modifier = Modifier.height(4.dp))
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         categories.chunked(2).forEach { rowCats ->
@@ -879,15 +986,16 @@ fun TaskFormDialog(
                                         onClick = { category = cat },
                                         modifier = Modifier.weight(1f),
                                         colors = ButtonDefaults.buttonColors(
-                                            containerColor = if (isSelected) LightMintGreen else DarkSurfaceElevated
+                                            containerColor = if (isSelected) AccentGreen else DarkBackground
                                         ),
-                                        shape = RoundedCornerShape(8.dp),
+                                        border = BorderStroke(1.dp, if (isSelected) AccentGreen else DarkBorder),
+                                        shape = RoundedCornerShape(12.dp),
                                         contentPadding = PaddingValues(vertical = 4.dp, horizontal = 2.dp)
                                     ) {
                                         Text(
-                                            cat,
-                                            style = Typography.labelSmall,
-                                            color = if (isSelected) DarkForestGreen else WhiteText,
+                                            text = cat,
+                                            style = Typography.labelSmall.copy(fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium),
+                                            color = if (isSelected) Color.White else MutedText,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis
                                         )
@@ -906,15 +1014,15 @@ fun TaskFormDialog(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("CANCEL", style = Typography.labelSmall, color = MutedText)
+                        Text("CANCEL", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
                     }
                     Button(
                         onClick = { onConfirm(title, priority, category) },
                         modifier = Modifier.weight(1.5f),
-                        colors = ButtonDefaults.buttonColors(containerColor = LightMintGreen),
-                        shape = RoundedCornerShape(8.dp)
+                        colors = ButtonDefaults.buttonColors(containerColor = DarkForestGreen),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("SAVE TASK", style = Typography.labelSmall, color = DarkForestGreen)
+                        Text("SAVE TASKS", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                     }
                 }
             }
@@ -938,18 +1046,21 @@ fun Tracker90DayScreen(viewModel: CompoundViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
              Text(
-                "BHAVA 3.0 PROGRESS TRACKER",
-                style = Typography.labelLarge,
-                color = LightMintGreen
+                text = "HABIT PROGRESS TRACKER",
+                style = Typography.labelLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.8.sp
+                ),
+                color = DarkForestGreen
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "A 90-day progress habits map to build a consistent daily streak.",
+                text = "A structured 90-day progress matrix designed to establish consistency and maintain streak loops.",
                 style = Typography.bodyMedium,
                 color = MutedText
             )
@@ -958,45 +1069,47 @@ fun Tracker90DayScreen(viewModel: CompoundViewModel) {
         item {
             Card(
                 colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
-                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.5f)),
-                shape = RoundedCornerShape(12.dp)
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(modifier = Modifier.padding(20.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column {
-                            Text("COMPLETED DAYS BASELINE", style = Typography.labelSmall, color = MutedText)
-                            Text("Day $completedCount of 90 Completed", style = Typography.headlineMedium, color = WhiteText)
+                            Text("HABIT BASELINE COMPLETION", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text("Day $completedCount of 90 Completed", style = Typography.headlineSmall.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp), color = WhiteText)
                         }
                         Box(
                             modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(AccentGreen)
                                 .padding(horizontal = 12.dp, vertical = 6.dp)
                         ) {
-                            Text("$progressPercent% COMPLETE", style = Typography.labelSmall, color = LightMintGreen)
+                            Text("$progressPercent% COMPLETED", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                         }
                     }
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(14.dp))
                     LinearProgressIndicator(
                         progress = { completedCount.toFloat() / 90f },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(8.dp)
                             .clip(RoundedCornerShape(4.dp)),
-                        color = LightMintGreen,
+                        color = AccentGreen,
                         trackColor = DarkBackground
                     )
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(14.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("HIGH FOCUS DAYS: $beastCount", style = Typography.labelSmall, color = GoldXPAccent)
-                        Text("DAILY HABIT TRACKING", style = Typography.labelSmall, color = MutedText)
+                        Text("HIGH FOCUS DAYS: $beastCount", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold, color = GoldXPAccent), color = GoldXPAccent)
+                        Text("CORE TIMELINE STATUS", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
                     }
                 }
             }
@@ -1004,12 +1117,13 @@ fun Tracker90DayScreen(viewModel: CompoundViewModel) {
 
         item {
             Card(
-                colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
-                border = BorderStroke(1.dp, AccentGreen),
-                shape = RoundedCornerShape(12.dp)
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("STREAK GRID", style = Typography.labelMedium, color = LightMintGreen)
+                Column(modifier = Modifier.padding(20.dp)) {
+                    Text("HABIT MATRIX GRID", style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp), color = DarkForestGreen)
                     Spacer(modifier = Modifier.height(12.dp))
 
                     val chunks = progressList.sortedBy { it.dayNumber }.chunked(10)
@@ -1022,28 +1136,28 @@ fun Tracker90DayScreen(viewModel: CompoundViewModel) {
                                 rowDays.forEach { day ->
                                     val cellColor = when (day.status) {
                                         "BEAST_MODE" -> GoldXPAccent
-                                        "COMPLETED" -> LightMintGreen
-                                        "LOW_DAY" -> SuccessGreen.copy(alpha = 0.5f)
+                                        "COMPLETED" -> SuccessGreen
+                                        "LOW_DAY" -> SuccessGreen.copy(alpha = 0.45f)
                                         else -> Color.Transparent
                                     }
                                     val borderColor = when (day.status) {
-                                        "UNATTEMPTED" -> AccentGreen.copy(alpha = 0.5f)
+                                        "UNATTEMPTED" -> DarkBorder
                                         else -> cellColor
                                     }
                                     Box(
                                         modifier = Modifier
                                             .weight(1f)
                                             .aspectRatio(1f)
-                                            .clip(RoundedCornerShape(4.dp))
+                                            .clip(RoundedCornerShape(6.dp))
                                             .background(cellColor)
-                                            .border(1.dp, borderColor, RoundedCornerShape(4.dp))
+                                            .border(1.dp, borderColor, RoundedCornerShape(6.dp))
                                             .clickable { dayToConfigure = day },
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
                                             text = "${day.dayNumber}",
                                             style = Typography.labelSmall,
-                                            fontSize = 8.sp,
+                                            fontSize = 9.sp,
                                             color = if (day.status == "UNATTEMPTED") MutedText else DarkForestGreen,
                                             fontWeight = FontWeight.Bold
                                         )
@@ -1063,52 +1177,64 @@ fun Tracker90DayScreen(viewModel: CompoundViewModel) {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(14.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("LIGHT FOCUS", style = Typography.labelSmall, color = SuccessGreen.copy(alpha = 0.5f))
-                        Text("FULL Focus", style = Typography.labelSmall, color = LightMintGreen)
-                        Text("HIGH FOCUS", style = Typography.labelSmall, color = GoldXPAccent)
-                        Text("Click grid cell to change status.", style = Typography.labelSmall, color = MutedText)
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Box(modifier = Modifier.size(10.dp).clip(RoundedCornerShape(2.dp)).background(SuccessGreen.copy(alpha=0.45f)))
+                            Text("LOW", style = Typography.labelSmall, color = MutedText, fontSize = 10.sp)
+                        }
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Box(modifier = Modifier.size(10.dp).clip(RoundedCornerShape(2.dp)).background(SuccessGreen))
+                            Text("FULL", style = Typography.labelSmall, color = MutedText, fontSize = 10.sp)
+                        }
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Box(modifier = Modifier.size(10.dp).clip(RoundedCornerShape(2.dp)).background(GoldXPAccent))
+                            Text("BEAST", style = Typography.labelSmall, color = MutedText, fontSize = 10.sp)
+                        }
+                        Text("Click cells to toggle.", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = AccentGreen, fontSize = 10.sp)
                     }
                 }
             }
         }
 
         item {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("90-DAY FOCUS PHASES", style = Typography.labelMedium, color = LightMintGreen)
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Text("90-DAY FOCUS PHASES", style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp), color = DarkForestGreen)
                 val phases = listOf(
-                    Triple("Phase 1: Foundation", "Days 1-22: Learn core data structures and logic.", completedCount >= 22),
-                    Triple("Phase 2: Apps Build", "Days 23-45: Write modern projects or applications.", completedCount >= 45),
-                    Triple("Phase 3: Expansion", "Days 46-68: Learn system architecture and design.", completedCount >= 68),
-                    Triple("Phase 4: Goals Achieved", "Days 69-90: Practice mock interviews and apply for jobs.", completedCount >= 90)
+                    Triple("Phase 1: Foundation", "Days 1-22: Formulate key patterns and daily focus schedules.", completedCount >= 22),
+                    Triple("Phase 2: Apps Build", "Days 23-45: Construct and architect functional engineering frameworks.", completedCount >= 45),
+                    Triple("Phase 3: Expansion", "Days 46-68: Expand concepts to high-scale layout structures.", completedCount >= 68),
+                    Triple("Phase 4: Goals Achieved", "Days 69-90: Leverage accountability arrays and complete targets.", completedCount >= 90)
                 )
 
                 phases.forEach { (title, subtitle, completed) ->
                     Card(
                         colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
-                        border = BorderStroke(1.dp, if (completed) SuccessGreen else AccentGreen.copy(alpha = 0.5f)),
-                        shape = RoundedCornerShape(8.dp)
+                        border = BorderStroke(1.dp, if (completed) SuccessGreen else DarkBorder),
+                        shape = RoundedCornerShape(24.dp),
+                        elevation = CardDefaults.cardElevation(1.dp)
                     ) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(12.dp),
+                                .padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Column {
-                                Text(title, style = Typography.titleLarge, color = if (completed) SuccessGreen else WhiteText)
-                                Text(subtitle, style = Typography.bodyMedium, color = MutedText)
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(title, style = Typography.titleLarge.copy(fontSize = 16.sp, fontWeight = FontWeight.Bold), color = if (completed) SuccessGreen else WhiteText)
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(subtitle, style = Typography.bodyMedium.copy(fontSize = 13.sp), color = MutedText)
                             }
+                            Spacer(modifier = Modifier.width(8.dp))
                             if (completed) {
-                                Icon(Icons.Default.Check, contentDescription = "Finished", tint = SuccessGreen)
+                                Icon(Icons.Default.CheckCircle, contentDescription = "Completed", tint = SuccessGreen, modifier = Modifier.size(24.dp))
                             } else {
-                                Icon(Icons.Default.Lock, contentDescription = "Active", tint = MutedText)
+                                Icon(Icons.Default.Lock, contentDescription = "Active", tint = MutedText, modifier = Modifier.size(20.dp))
                             }
                         }
                     }
@@ -1121,44 +1247,51 @@ fun Tracker90DayScreen(viewModel: CompoundViewModel) {
         val statePresets = listOf("UNATTEMPTED", "LOW_DAY", "COMPLETED", "BEAST_MODE")
         Dialog(onDismissRequest = { dayToConfigure = null }) {
             Card(
-                colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
-                border = BorderStroke(1.dp, LightMintGreen),
-                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
+                elevation = CardDefaults.cardElevation(6.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("CONFIGURE STATE: DAY ${day.dayNumber}", style = Typography.labelLarge, color = LightMintGreen)
-                    Text("Configure status baseline for this day's run:", style = Typography.bodyMedium, color = MutedText)
+                    Text("CONFIGURE STATE: DAY ${day.dayNumber}", style = Typography.labelLarge.copy(fontWeight = FontWeight.Bold), color = DarkForestGreen)
+                    Text("Select execution baseline for Day ${day.dayNumber}:", style = Typography.bodyMedium, color = MutedText, textAlign = TextAlign.Center)
 
-                    statePresets.forEach { preset ->
-                        val isActive = day.status == preset
-                        Button(
-                            onClick = {
-                                viewModel.updateDayStatus(day.dayNumber, preset)
-                                dayToConfigure = null
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (isActive) LightMintGreen else DarkSurfaceElevated
-                            ),
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-                            Text(
-                                preset,
-                                style = Typography.labelSmall,
-                                color = if (isActive) DarkForestGreen else WhiteText
-                            )
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        statePresets.forEach { preset ->
+                            val isActive = day.status == preset
+                            Button(
+                                onClick = {
+                                    viewModel.updateDayStatus(day.dayNumber, preset)
+                                    dayToConfigure = null
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = if (isActive) DarkForestGreen else DarkBackground
+                                ),
+                                shape = RoundedCornerShape(14.dp),
+                                border = if (!isActive) BorderStroke(1.dp, DarkBorder) else null
+                            ) {
+                                Text(
+                                    text = preset,
+                                    style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                                    color = if (isActive) Color.White else DarkForestGreen
+                                )
+                            }
                         }
                     }
 
                     TextButton(onClick = { dayToConfigure = null }) {
-                        Text("CLOSE", style = Typography.labelSmall, color = MutedText)
+                        Text("Dismiss Option", style = Typography.labelSmall, color = MutedText)
                     }
                 }
             }
@@ -1191,7 +1324,7 @@ fun JournalScreen(viewModel: CompoundViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(18.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -1200,20 +1333,27 @@ fun JournalScreen(viewModel: CompoundViewModel) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("NEW JOURNAL ENTRY - $formattedDate", style = Typography.labelMedium, color = LightMintGreen)
+                Text(
+                    text = "NEW EXECUTION LOG", 
+                    style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp), 
+                    color = DarkForestGreen
+                )
                 IconButton(onClick = { showForm = false }) {
-                    Icon(Icons.Default.Close, contentDescription = "Back", tint = WhiteText)
+                    Icon(Icons.Default.Close, contentDescription = "Close Form", tint = DarkForestGreen)
                 }
             }
+
+            Text("DATE: $formattedDate", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
 
             OutlinedTextField(
                 value = shipped,
                 onValueChange = { shipped = it },
                 label = { Text("What did you accomplish today?", style = Typography.bodyMedium, color = MutedText) },
                 modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = LightMintGreen,
-                    unfocusedBorderColor = AccentGreen,
+                    focusedBorderColor = AccentGreen,
+                    unfocusedBorderColor = DarkBorder,
                     focusedTextColor = WhiteText,
                     unfocusedTextColor = WhiteText
                 )
@@ -1224,9 +1364,10 @@ fun JournalScreen(viewModel: CompoundViewModel) {
                 onValueChange = { blockers = it },
                 label = { Text("What blockers / friction did you face today?", style = Typography.bodyMedium, color = MutedText) },
                 modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = LightMintGreen,
-                    unfocusedBorderColor = AccentGreen,
+                    focusedBorderColor = AccentGreen,
+                    unfocusedBorderColor = DarkBorder,
                     focusedTextColor = WhiteText,
                     unfocusedTextColor = WhiteText
                 )
@@ -1237,9 +1378,10 @@ fun JournalScreen(viewModel: CompoundViewModel) {
                 onValueChange = { improvements = it },
                 label = { Text("What can you improve tomorrow?", style = Typography.bodyMedium, color = MutedText) },
                 modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = LightMintGreen,
-                    unfocusedBorderColor = AccentGreen,
+                    focusedBorderColor = AccentGreen,
+                    unfocusedBorderColor = DarkBorder,
                     focusedTextColor = WhiteText,
                     unfocusedTextColor = WhiteText
                 )
@@ -1248,12 +1390,13 @@ fun JournalScreen(viewModel: CompoundViewModel) {
             OutlinedTextField(
                 value = lessons,
                 onValueChange = { lessons = it },
-                label = { Text("Lessons learned (Markdown)", style = Typography.bodyMedium, color = MutedText) },
+                label = { Text("Lessons learned (Markdown/Notes)", style = Typography.bodyMedium, color = MutedText) },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 3,
+                shape = RoundedCornerShape(14.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = LightMintGreen,
-                    unfocusedBorderColor = AccentGreen,
+                    focusedBorderColor = AccentGreen,
+                    unfocusedBorderColor = DarkBorder,
                     focusedTextColor = WhiteText,
                     unfocusedTextColor = WhiteText
                 )
@@ -1264,25 +1407,27 @@ fun JournalScreen(viewModel: CompoundViewModel) {
                 onValueChange = { wins = it },
                 label = { Text("Daily wins (comma separated)", style = Typography.bodyMedium, color = MutedText) },
                 modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = LightMintGreen,
-                    unfocusedBorderColor = AccentGreen,
+                    focusedBorderColor = AccentGreen,
+                    unfocusedBorderColor = DarkBorder,
                     focusedTextColor = WhiteText,
                     unfocusedTextColor = WhiteText
                 )
             )
 
             Column {
-                Text("ENERGY LEVEL: $energy / 5", style = Typography.labelSmall, color = MutedText)
+                Text("ENERGY CAPACITY FLOW: Level $energy / 5", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                Spacer(modifier = Modifier.height(6.dp))
                 Slider(
                     value = energy.toFloat(),
                     onValueChange = { energy = it.toInt() },
                     valueRange = 1f..5f,
                     steps = 3,
                     colors = SliderDefaults.colors(
-                        thumbColor = LightMintGreen,
-                        activeTrackColor = LightMintGreen,
-                        inactiveTrackColor = DarkSurfaceElevated
+                        thumbColor = AccentGreen,
+                        activeTrackColor = AccentGreen,
+                        inactiveTrackColor = DarkBorder
                     )
                 )
             }
@@ -1306,11 +1451,13 @@ fun JournalScreen(viewModel: CompoundViewModel) {
                     wins = ""
                     showForm = false
                 },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = LightMintGreen),
-                shape = RoundedCornerShape(8.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = DarkForestGreen),
+                shape = RoundedCornerShape(16.dp)
             ) {
-                Text("SAVE JOURNAL ENTRY", style = Typography.labelSmall, color = DarkForestGreen)
+                Text("COMMIT JOURNAL ARCHIVE", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
             }
         }
     } else {
@@ -1318,20 +1465,23 @@ fun JournalScreen(viewModel: CompoundViewModel) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(18.dp)
             ) {
                 Text(
                     text = "JOURNAL LOGS",
-                    style = Typography.labelLarge,
-                    color = LightMintGreen
+                    style = Typography.labelLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.8.sp
+                    ),
+                    color = DarkForestGreen
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "A record of your daily learnings, wins, blockages, and mood.",
+                    text = "Archive daily reflections, micro-learnings, roadblocks, and energy alignment metrics.",
                     style = Typography.bodyMedium,
                     color = MutedText
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(18.dp))
 
                 if (entries.isEmpty()) {
                     Box(
@@ -1348,17 +1498,17 @@ fun JournalScreen(viewModel: CompoundViewModel) {
                                 imageVector = Icons.Default.Edit,
                                 contentDescription = "None",
                                 tint = AccentGreen,
-                                modifier = Modifier.size(64.dp)
+                                modifier = Modifier.size(56.dp)
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             Text(
-                                "NO EXECUTION LOGS ARCHIVED",
-                                style = Typography.labelMedium,
-                                color = LightMintGreen
+                                text = "NO ARCHIVED LOGS FOUND",
+                                style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                                color = DarkForestGreen
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                "Ship first review to index progress into the core mainframe.",
+                                text = "Commit your first daily reflection review to index historical progression.",
                                 style = Typography.bodyMedium,
                                 color = MutedText,
                                 textAlign = TextAlign.Center
@@ -1373,36 +1523,42 @@ fun JournalScreen(viewModel: CompoundViewModel) {
                         items(entries) { entry ->
                             Card(
                                 colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
-                                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.5f)),
-                                shape = RoundedCornerShape(12.dp),
+                                border = BorderStroke(1.dp, DarkBorder),
+                                shape = RoundedCornerShape(24.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable { detailEntry = entry }
+                                    .clickable { detailEntry = entry },
+                                elevation = CardDefaults.cardElevation(2.dp)
                             ) {
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(16.dp),
+                                        .padding(20.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Column(modifier = Modifier.weight(1f)) {
-                                        Text("RUN DATE: ${entry.date}", style = Typography.labelSmall, color = LightMintGreen)
-                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Text("LOG RUN DATE: ${entry.date}", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = AccentGreen)
+                                        Spacer(modifier = Modifier.height(6.dp))
                                         Text(
-                                            text = if (entry.reflectionWhatShipped.isNotBlank()) entry.reflectionWhatShipped else "No output quantified.",
-                                            style = Typography.bodyLarge,
+                                            text = if (entry.reflectionWhatShipped.isNotBlank()) entry.reflectionWhatShipped else "Unquantified goals committed.",
+                                            style = Typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                                             color = WhiteText,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis
                                         )
-                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Spacer(modifier = Modifier.height(8.dp))
                                         Row(
                                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                                             verticalAlignment = Alignment.CenterVertically
                                         ) {
-                                            Badge(containerColor = DarkBackground, contentColor = GoldXPAccent) {
-                                                Text("Energy: Lvl ${entry.energyLevel}", style = Typography.labelSmall, modifier = Modifier.padding(2.dp))
+                                            Box(
+                                                modifier = Modifier
+                                                    .clip(RoundedCornerShape(8.dp))
+                                                    .background(DarkBackground)
+                                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                                            ) {
+                                                Text("Energy Level: ${entry.energyLevel}/5", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = DarkForestGreen)
                                             }
                                         }
                                     }
@@ -1410,7 +1566,7 @@ fun JournalScreen(viewModel: CompoundViewModel) {
                                         onClick = { viewModel.deleteJournalEntry(entry) },
                                         modifier = Modifier.minimumInteractiveComponentSize()
                                     ) {
-                                        Icon(Icons.Default.Delete, contentDescription = "Clean Log", tint = DangerRed)
+                                        Icon(Icons.Default.Delete, contentDescription = "Purge Reflection", tint = DangerRed)
                                     }
                                 }
                             }
@@ -1421,15 +1577,15 @@ fun JournalScreen(viewModel: CompoundViewModel) {
 
             FloatingActionButton(
                 onClick = { showForm = true },
-                containerColor = LightMintGreen,
-                contentColor = DarkForestGreen,
-                shape = RoundedCornerShape(16.dp),
+                containerColor = AccentGreen,
+                contentColor = Color.White,
+                shape = RoundedCornerShape(20.dp),
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(16.dp)
+                    .padding(24.dp)
                     .testTag("add_journal_fab")
             ) {
-                Icon(Icons.Default.Create, contentDescription = "Log Shipment")
+                Icon(Icons.Default.Create, contentDescription = "Log Reflected Goals")
             }
         }
     }
@@ -1437,51 +1593,87 @@ fun JournalScreen(viewModel: CompoundViewModel) {
     detailEntry?.let { entry ->
         Dialog(onDismissRequest = { detailEntry = null }) {
             Card(
-                colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
-                border = BorderStroke(1.dp, LightMintGreen),
-                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
+                elevation = CardDefaults.cardElevation(6.dp)
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(20.dp)
                         .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
                 ) {
-                    Text("JOURNAL ENTRY: ${entry.date}", style = Typography.labelLarge, color = LightMintGreen, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                    Text(
+                        text = "JOURNAL ENTRY: ${entry.date}", 
+                        style = Typography.labelLarge.copy(fontWeight = FontWeight.Bold), 
+                        color = DarkForestGreen, 
+                        textAlign = TextAlign.Center, 
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-                    Divider(color = AccentGreen)
+                    HorizontalDivider(color = DarkBorder)
 
-                    Text("ACCOMPLISHED GOALS", style = Typography.labelSmall, color = MutedText)
-                    Text(entry.reflectionWhatShipped.ifBlank { "N/A" }, style = Typography.bodyLarge, color = WhiteText)
+                    Column {
+                        Text("ACCOMPLISHED MILESTONES", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(entry.reflectionWhatShipped.ifBlank { "Unreported accomplishments." }, style = Typography.bodyLarge, color = WhiteText)
+                    }
 
-                    Text("BLOCKERS / FRICTION", style = Typography.labelSmall, color = MutedText)
-                    Text(entry.reflectionBlocker.ifBlank { "N/A" }, style = Typography.bodyLarge, color = WhiteText)
+                    Column {
+                        Text("Roadblocks Faced", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(entry.reflectionBlocker.ifBlank { "No roadblocks encountered." }, style = Typography.bodyLarge, color = WhiteText)
+                    }
 
-                    Text("TOMORROW'S IMPROVEMENTS", style = Typography.labelSmall, color = MutedText)
-                    Text(entry.reflectionImprovement.ifBlank { "N/A" }, style = Typography.bodyLarge, color = WhiteText)
+                    Column {
+                        Text("Areas to Focus/Improve", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(entry.reflectionImprovement.ifBlank { "No improvement points identified." }, style = Typography.bodyLarge, color = WhiteText)
+                    }
 
-                    Text("LESSONS LEARNED", style = Typography.labelSmall, color = MutedText)
-                    Text(entry.lessonsLearned.ifBlank { "N/A" }, style = Typography.bodyLarge, color = WhiteText)
+                    Column {
+                        Text("Lessons learned", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(entry.lessonsLearned.ifBlank { "No specific lessons documented." }, style = Typography.bodyLarge, color = WhiteText)
+                    }
 
-                    Text("DAILY WINS", style = Typography.labelSmall, color = MutedText)
-                    Text(entry.wins.ifBlank { "N/A" }, style = Typography.bodyLarge, color = WhiteText)
+                    Column {
+                        Text("Today's Wins", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(entry.wins.ifBlank { "No unique wins recorded." }, style = Typography.bodyLarge, color = WhiteText)
+                    }
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("ENERGY SCORE: ${entry.energyLevel}/5", style = Typography.labelMedium, color = LightMintGreen)
+                        Text("ENERGY LEVEL:", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(DarkBackground)
+                                .padding(horizontal = 10.dp, vertical = 4.dp)
+                        ) {
+                            Text("${entry.energyLevel} / 5", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = DarkForestGreen)
+                        }
                     }
+
+                    Spacer(modifier = Modifier.height(4.dp))
 
                     Button(
                         onClick = { detailEntry = null },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(containerColor = AccentGreen)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = DarkForestGreen),
+                        shape = RoundedCornerShape(14.dp)
                     ) {
-                        Text("CLOSE DETAILS", style = Typography.labelSmall, color = WhiteText)
+                        Text("Close Archive Sheet", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                     }
                 }
             }
@@ -1495,244 +1687,310 @@ fun AnalyticsScreen(viewModel: CompoundViewModel) {
     val tasks by viewModel.allTasks.collectAsStateWithLifecycle()
     val xp by viewModel.totalXP.collectAsStateWithLifecycle(0)
     val focusHoursVal by viewModel.focusHours.collectAsStateWithLifecycle(0.0)
+    val categoryHoursMap by viewModel.categoryHours.collectAsStateWithLifecycle(emptyMap())
 
     val completedTasksCount = tasks.count { it.isCompleted }
 
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(18.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        item {
+        Column {
             Text(
-                "PROGRESS AND STREAK METRICS",
-                style = Typography.labelLarge,
-                color = LightMintGreen
+                text = "ANALYTICS",
+                style = Typography.labelLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.8.sp
+                ),
+                color = DarkForestGreen
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "Track your daily focus hours, habit completion, and streak history.",
+                text = "Track your daily study hours, habit completions, and cumulative system progress.",
                 style = Typography.bodyMedium,
                 color = MutedText
             )
         }
 
-        item {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.15f)),
-                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.35f)),
-                shape = RoundedCornerShape(16.dp)
+        // Summary Card (Soft Floating Card, corner radius 24.dp, subtle background/borders)
+        Card(
+            colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+            border = BorderStroke(1.dp, DarkBorder),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(2.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("TOTAL XP", style = Typography.labelSmall, color = MutedText)
-                        Text("$xp", style = Typography.headlineLarge, color = GoldXPAccent)
-                    }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("FOCUS TIME", style = Typography.labelSmall, color = MutedText)
-                        Text(String.format(Locale.US, "%.1f H", focusHoursVal), style = Typography.headlineLarge, color = LightMintGreen)
-                    }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("COMPLETED", style = Typography.labelSmall, color = MutedText)
-                        Text("$completedTasksCount", style = Typography.headlineLarge, color = SuccessGreen)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("GOLDEN XP", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text("$xp", style = Typography.headlineLarge.copy(fontWeight = FontWeight.Bold, fontSize = 22.sp), color = GoldXPAccent)
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("FOCUS TIME", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(String.format(Locale.US, "%.1f H", focusHoursVal), style = Typography.headlineLarge.copy(fontWeight = FontWeight.Bold, fontSize = 22.sp), color = AccentGreen)
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("COMPLETED", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text("$completedTasksCount", style = Typography.headlineLarge.copy(fontWeight = FontWeight.Bold, fontSize = 22.sp), color = SuccessGreen)
+                }
+            }
+        }
+
+        // Newly Added: Category-wise Hour Tracking
+        Card(
+            colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+            border = BorderStroke(1.dp, DarkBorder),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(2.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                Text(
+                    text = "CATEGORY WORKSTREAM BLOCK LOGS", 
+                    style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp), 
+                    color = DarkForestGreen
+                )
+
+                categoryHoursMap.forEach { (cat, hrs) ->
+                    val ratio = if (focusHoursVal > 0) (hrs / focusHoursVal).coerceIn(0.0, 1.0) else 0.0
+                    Column {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(cat, style = Typography.bodyMedium.copy(fontWeight = FontWeight.Medium), color = WhiteText)
+                            Text(String.format(Locale.US, "%.1f Hrs (%.0f%%)", hrs, ratio * 100), style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = AccentGreen)
+                        }
+                        Spacer(modifier = Modifier.height(6.dp))
+                        LinearProgressIndicator(
+                            progress = { ratio.toFloat() },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(6.dp)
+                                .clip(RoundedCornerShape(3.dp)),
+                            color = AccentGreen,
+                            trackColor = DarkBackground
+                        )
                     }
                 }
             }
         }
 
-        item {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.15f)),
-                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.35f)),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("DAILY FOCUS HISTORY", style = Typography.labelMedium, color = LightMintGreen)
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text("Your daily study and focus timeline over the last 24 hours.", style = Typography.bodyMedium, color = MutedText)
-                    Spacer(modifier = Modifier.height(16.dp))
+        // Linear Focus Chart
+        Card(
+            colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+            border = BorderStroke(1.dp, DarkBorder),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(2.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(
+                    text = "DAILY STUDY INTENSITIES", 
+                    style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp), 
+                    color = DarkForestGreen
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Text("Focus velocity timeline over the past week.", style = Typography.bodyMedium, color = MutedText)
+                Spacer(modifier = Modifier.height(16.dp))
 
-                    Canvas(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(120.dp)
-                    ) {
-                        val width = size.width
-                        val height = size.height
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(110.dp)
+                ) {
+                    val width = size.width
+                    val height = size.height
 
-                        val linesCount = 4
-                        for (i in 0..linesCount) {
-                            val y = i * (height / linesCount)
-                            drawLine(
-                                color = AccentGreen.copy(alpha = 0.15f),
-                                start = Offset(0f, y),
-                                end = Offset(width, y),
-                                strokeWidth = 1f
+                    val linesCount = 4
+                    for (i in 0..linesCount) {
+                        val y = i * (height / linesCount)
+                        drawLine(
+                            color = DarkBorder.copy(alpha = 0.5f),
+                            start = Offset(0f, y),
+                            end = Offset(width, y),
+                            strokeWidth = 1f
+                        )
+                    }
+
+                    val points = if (focusHoursVal > 0) {
+                        listOf(
+                            Offset(0f, height * 0.85f),
+                            Offset(width * 0.2f, height * 0.45f),
+                            Offset(width * 0.4f, height * 0.65f),
+                            Offset(width * 0.6f, height * 0.15f),
+                            Offset(width * 0.8f, height * 0.55f),
+                            Offset(width, height * 0.25f)
+                        )
+                    } else {
+                        listOf(
+                            Offset(0f, height * 0.85f),
+                            Offset(width * 0.5f, height * 0.85f),
+                            Offset(width, height * 0.85f)
+                        )
+                    }
+
+                    val path = Path().apply {
+                        moveTo(points[0].x, points[0].y)
+                        for (i in 1 until points.size) {
+                            val prev = points[i - 1]
+                            val curr = points[i]
+                            cubicTo(
+                                x1 = (prev.x + curr.x) / 2,
+                                y1 = prev.y,
+                                x2 = (prev.x + curr.x) / 2,
+                                y2 = curr.y,
+                                x3 = curr.x,
+                                y3 = curr.y
                             )
                         }
+                    }
 
-                        val points = if (focusHoursVal > 0) {
-                            listOf(
-                                Offset(0f, height * 0.9f),
-                                Offset(width * 0.2f, height * 0.5f),
-                                Offset(width * 0.4f, height * 0.75f),
-                                Offset(width * 0.6f, height * 0.2f),
-                                Offset(width * 0.8f, height * 0.6f),
-                                Offset(width, height * 0.1f)
-                            )
-                        } else {
-                            listOf(
-                                Offset(0f, height * 0.9f),
-                                Offset(width * 0.5f, height * 0.9f),
-                                Offset(width, height * 0.9f)
-                            )
+                    drawPath(
+                        path = path,
+                        color = AccentGreen,
+                        style = Stroke(width = 3.5f)
+                    )
+
+                    points.forEach { pt ->
+                        drawCircle(
+                            color = GoldXPAccent,
+                            radius = 5.5f,
+                            center = pt
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("MON", style = Typography.labelSmall, color = MutedText)
+                    Text("TUE", style = Typography.labelSmall, color = MutedText)
+                    Text("WED", style = Typography.labelSmall, color = MutedText)
+                    Text("THU", style = Typography.labelSmall, color = MutedText)
+                    Text("FRI", style = Typography.labelSmall, color = MutedText)
+                    Text("SAT", style = Typography.labelSmall, color = MutedText)
+                }
+            }
+        }
+
+        // Subject practicing progression
+        Card(
+            colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+            border = BorderStroke(1.dp, DarkBorder),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(2.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Text(
+                    text = "SUBJECT PRACTICE OVERVIEW", 
+                    style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp), 
+                    color = DarkForestGreen
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+
+                val computedCoding = (completedTasksCount * 12).coerceAtMost(100)
+                val computedAlgo = (completedTasksCount * 18).coerceAtMost(100)
+                val computedDesign = (completedTasksCount * 10).coerceAtMost(100)
+                val computedComm = (completedTasksCount * 15).coerceAtMost(100)
+
+                val skills = listOf(
+                    Pair("Coding & Development", computedCoding),
+                    Pair("Algorithms & Logic", computedAlgo),
+                    Pair("Design & Systems", computedDesign),
+                    Pair("Communication & Prep", computedComm)
+                )
+
+                skills.forEach { (name, ratio) ->
+                    Column {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(name, style = Typography.bodyMedium.copy(fontWeight = FontWeight.Medium), color = WhiteText)
+                            Text("$ratio%", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = AccentGreen)
                         }
+                        Spacer(modifier = Modifier.height(4.dp))
+                        LinearProgressIndicator(
+                            progress = { ratio / 100f },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(6.dp)
+                                .clip(RoundedCornerShape(3.dp)),
+                            color = AccentGreen,
+                            trackColor = DarkBackground
+                        )
+                    }
+                }
+            }
+        }
 
-                        val path = Path().apply {
-                            moveTo(points[0].x, points[0].y)
-                            for (i in 1 until points.size) {
-                                val prev = points[i - 1]
-                                val curr = points[i]
-                                cubicTo(
-                                    x1 = (prev.x + curr.x) / 2,
-                                    y1 = prev.y,
-                                    x2 = (prev.x + curr.x) / 2,
-                                    y2 = curr.y,
-                                    x3 = curr.x,
-                                    y3 = curr.y
+        // Streak activity map block grid (Warm Minimal pastel GitHub style)
+        Card(
+            colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+            border = BorderStroke(1.dp, DarkBorder),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(2.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(
+                    text = "STREAK ACTIVITY GRID", 
+                    style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp), 
+                    color = DarkForestGreen
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(3.dp),
+                ) {
+                    for (col in 0 until 18) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(3.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            for (row in 0 until 5) {
+                                val cellRatio = (col + row) % 5
+                                val bg = when (cellRatio) {
+                                    4 -> GoldXPAccent
+                                    3 -> SuccessGreen
+                                    2 -> SuccessGreen.copy(alpha = 0.6f)
+                                    1 -> SuccessGreen.copy(alpha = 0.3f)
+                                    else -> DarkBackground
+                                }
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .aspectRatio(1f)
+                                        .clip(RoundedCornerShape(3.dp))
+                                        .background(bg)
                                 )
                             }
                         }
-
-                        drawPath(
-                            path = path,
-                            color = LightMintGreen,
-                            style = Stroke(width = 4f)
-                        )
-
-                        points.forEach { pt ->
-                            drawCircle(
-                                color = GoldXPAccent,
-                                radius = 6f,
-                                center = pt
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("00:00", style = Typography.labelSmall, color = MutedText)
-                        Text("06:00", style = Typography.labelSmall, color = MutedText)
-                        Text("12:00", style = Typography.labelSmall, color = MutedText)
-                        Text("18:00", style = Typography.labelSmall, color = MutedText)
-                        Text("24:00", style = Typography.labelSmall, color = MutedText)
                     }
                 }
-            }
-        }
-
-        item {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.15f)),
-                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.35f)),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("SUBJECT PRACTICE PROGRESS", style = Typography.labelMedium, color = LightMintGreen)
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                    val computedCoding = (completedTasksCount * 12).coerceAtMost(100)
-                    val computedAlgo = (completedTasksCount * 18).coerceAtMost(100)
-                    val computedDesign = (completedTasksCount * 10).coerceAtMost(100)
-                    val computedComm = (completedTasksCount * 15).coerceAtMost(100)
-
-                    val skills = listOf(
-                        Pair("Coding & Development", computedCoding),
-                        Pair("Algorithms & Logic", computedAlgo),
-                        Pair("Design & Systems", computedDesign),
-                        Pair("Communication & Prep", computedComm)
-                    )
-
-                    skills.forEach { (name, ratio) ->
-                        Column {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text(name, style = Typography.bodyMedium, color = WhiteText)
-                                Text("$ratio%", style = Typography.labelSmall, color = LightMintGreen)
-                            }
-                            Spacer(modifier = Modifier.height(4.dp))
-                            LinearProgressIndicator(
-                                progress = { ratio / 100f },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(6.dp)
-                                    .clip(RoundedCornerShape(3.dp)),
-                                color = LightMintGreen,
-                                trackColor = DarkForestGreen
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        item {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = AccentGreen.copy(alpha = 0.15f)),
-                border = BorderStroke(1.dp, AccentGreen.copy(alpha = 0.35f)),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("STREAK ACTIVITY GRID", style = Typography.labelMedium, color = LightMintGreen)
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(2.dp),
-                    ) {
-                        for (col in 0 until 18) {
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(2.dp),
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                for (row in 0 until 5) {
-                                    val cellRatio = (col + row) % 4
-                                    val bg = when (cellRatio) {
-                                        3 -> LightMintGreen
-                                        2 -> AccentGreen
-                                        1 -> SuccessGreen
-                                        else -> DarkForestGreen
-                                    }
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .aspectRatio(1f)
-                                            .clip(RoundedCornerShape(2.dp))
-                                            .background(bg)
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        "Streak activity metric represents consecutive habit tracking days.",
-                        style = Typography.bodyMedium,
-                        color = MutedText,
-                        fontSize = 11.sp
-                    )
-                }
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = "A dense sequential matrix representing your active deep study consistency.",
+                    style = Typography.bodyMedium,
+                    color = MutedText,
+                    fontSize = 11.sp
+                )
             }
         }
     }
@@ -1745,38 +2003,28 @@ fun FocusScreen(viewModel: CompoundViewModel) {
     val tasks by viewModel.allTasks.collectAsStateWithLifecycle()
     val incompleteTasks = tasks.filter { !it.isCompleted }
 
-    var isTimerActive by remember { mutableStateOf(false) }
-    var countdownSeconds by remember { mutableStateOf(50 * 60) }
-    var selectedSessionMinutes by remember { mutableStateOf(50) }
-    var showTaskSelectorDropdown by remember { mutableStateOf(false) }
+    val isTimerActive by viewModel.isTimerActive.collectAsStateWithLifecycle()
+    val countdownSeconds by viewModel.countdownSeconds.collectAsStateWithLifecycle()
+    val selectedSessionMinutes by viewModel.selectedSessionMinutes.collectAsStateWithLifecycle()
+    val selectedTimerCategory by viewModel.selectedTimerCategory.collectAsStateWithLifecycle()
 
-    LaunchedEffect(isTimerActive, countdownSeconds) {
-        if (isTimerActive && countdownSeconds > 0) {
-            delay(1000)
-            countdownSeconds -= 1
-        } else if (isTimerActive && countdownSeconds == 0) {
-            isTimerActive = false
-            val xpReward = selectedSessionMinutes * 10
-            viewModel.logFocusSession(
-                missionName = selectedTask?.title ?: "Focus block",
-                durationMinutes = selectedSessionMinutes,
-                xpEarned = xpReward
-            )
-            selectedTask?.let { viewModel.updateTaskCompletion(it, true) }
-            countdownSeconds = selectedSessionMinutes * 60
-        }
-    }
+    var showTaskSelectorDropdown by remember { mutableStateOf(false) }
+    var showCategorySelectorDropdown by remember { mutableStateOf(false) }
+    var customMinInput by remember { mutableStateOf("") }
 
     val displayMin = countdownSeconds / 60
     val displaySec = countdownSeconds % 60
     val formattedTime = String.format(Locale.US, "%02d:%02d", displayMin, displaySec)
 
+    val defaultCategories = listOf("Dentist PWA", "DSA", "Core Engineering", "AI Learning", "Cybersecurity", "Journal")
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .padding(22.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -1794,73 +2042,112 @@ fun FocusScreen(viewModel: CompoundViewModel) {
                         .background(if (isTimerActive) DangerRed else SuccessGreen)
                 )
                 Text(
-                    text = if (isTimerActive) "TIMER IN FOCUS MODE" else "STANDBY // SELECT STUDY TIMER",
-                    style = Typography.labelSmall,
-                    color = LightMintGreen
+                    text = if (isTimerActive) "SECURE STUDY SESSION ACTIVE" else "STUDY BLOCK STANDBY",
+                    style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
+                    color = DarkForestGreen
                 )
             }
-            Text("BHAVA 3.0 // FOCUS", style = Typography.labelSmall, color = MutedText)
+            Text("BHAVA 3.0", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
         }
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("STUDY FOCUS BLOCK", style = Typography.labelSmall, color = MutedText)
+        // Active Task Selector Container
+        Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()) {
+            Text("STUDY TARGET / MILESTONE", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
             Spacer(modifier = Modifier.height(4.dp))
             Surface(
                 color = DarkSurfaceElevated,
-                border = BorderStroke(1.dp, AccentGreen),
-                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(1.dp, if (selectedTask != null) AccentGreen else DarkBorder),
+                shape = RoundedCornerShape(24.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { showTaskSelectorDropdown = true }
+                    .clickable { if (!isTimerActive) showTaskSelectorDropdown = true }
             ) {
                 Row(
-                    modifier = Modifier.padding(12.dp),
+                    modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        selectedTask?.title ?: "STANDALONE FOCUS BLOCK // SELECT TASK",
-                        style = Typography.headlineMedium,
+                        selectedTask?.title ?: "STANDALONE TASK RUN // CLICK TO ASSIGN",
+                        style = Typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold, fontSize = 14.sp),
                         color = if (selectedTask == null) MutedText else WhiteText,
-                        fontSize = 16.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f)
                     )
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Expand",
-                        tint = LightMintGreen
-                    )
+                    IconButton(
+                        onClick = { if (!isTimerActive) viewModel.setSelectedFocusTask(null) },
+                        enabled = !isTimerActive,
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (selectedTask != null) Icons.Default.Close else Icons.Default.ArrowDropDown,
+                            contentDescription = "Task control",
+                            tint = DarkForestGreen
+                        )
+                    }
+                }
+            }
+        }
+
+        // Show standalone category drawer in case no task is active
+        if (selectedTask == null) {
+            Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()) {
+                Text("STANDALONE FOCUS CATEGORY TRACKING", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                Spacer(modifier = Modifier.height(4.dp))
+                Surface(
+                    color = DarkSurfaceElevated,
+                    border = BorderStroke(1.dp, DarkBorder),
+                    shape = RoundedCornerShape(24.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { if (!isTimerActive) showCategorySelectorDropdown = true }
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Subject: $selectedTimerCategory",
+                            style = Typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                            color = AccentGreen,
+                            fontSize = 14.sp
+                        )
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Categories",
+                            tint = DarkForestGreen
+                        )
+                    }
                 }
             }
         }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp),
-            modifier = Modifier.weight(1f)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = "${selectedSessionMinutes * 10} XP REWARD POTENTIAL",
-                style = Typography.labelSmall.copy(letterSpacing = 1.sp),
-                color = GoldXPAccent,
-                fontWeight = FontWeight.Bold
+                style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp),
+                color = GoldXPAccent
             )
 
-            // Concentric circular timer design
+            // Dynamic interactive circular timer
             Box(
                 modifier = Modifier
-                    .size(240.dp)
+                    .size(210.dp)
                     .align(Alignment.CenterHorizontally),
                 contentAlignment = Alignment.Center
             ) {
-                // Outer dashed circle
+                // Outer dashed visual orbit guide
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     drawCircle(
-                        color = AccentGreen.copy(alpha = 0.5f),
+                        color = AccentGreen.copy(alpha = 0.35f),
                         style = Stroke(
-                            width = 1.5f,
+                            width = 2f,
                             pathEffect = androidx.compose.ui.graphics.PathEffect.dashPathEffect(
                                 floatArrayOf(8f, 12f), 0f
                             )
@@ -1868,17 +2155,17 @@ fun FocusScreen(viewModel: CompoundViewModel) {
                     )
                 }
                 
-                // Solid Inner padding and borders
+                // Solid Inner circular shield (pure soft White background)
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp)
-                        .clip(RoundedCornerShape(200.dp))
-                        .background(AccentGreen.copy(alpha = 0.05f))
+                        .padding(14.dp)
+                        .clip(RoundedCornerShape(210.dp))
+                        .background(Color.White)
                         .border(
-                            width = 6.dp, 
-                            color = AccentGreen.copy(alpha = 0.2f), 
-                            shape = RoundedCornerShape(200.dp)
+                            width = 4.dp, 
+                            color = AccentGreen.copy(alpha = 0.15f), 
+                            shape = RoundedCornerShape(210.dp)
                         ),
                     contentAlignment = Alignment.Center
                 ) {
@@ -1886,20 +2173,20 @@ fun FocusScreen(viewModel: CompoundViewModel) {
                         Text(
                             text = formattedTime,
                             style = Typography.displayLarge.copy(
-                                fontSize = 44.sp,
+                                fontSize = 42.sp,
                                 fontFamily = FontFamily.Monospace,
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = (-1).sp
                             ),
-                            color = WhiteText
+                            color = DarkForestGreen
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "STUDY FOCUS TIMER",
+                            text = if (isTimerActive) "FOCUS ACTIVE" else "STANDBY",
                             style = Typography.labelSmall.copy(
-                                fontSize = 9.sp,
+                                fontSize = 10.sp,
                                 letterSpacing = 2.sp,
-                                fontWeight = FontWeight.SemiBold
+                                fontWeight = FontWeight.Bold
                             ),
                             color = MutedText
                         )
@@ -1907,36 +2194,195 @@ fun FocusScreen(viewModel: CompoundViewModel) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            // Quick Preset Selection: 25, 45, 67, 120 minutes!
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                Text("QUICK TIME PRESETS", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    val presets = listOf(25, 45, 67, 120)
+                    presets.forEach { min ->
+                        val isActive = selectedSessionMinutes == min
+                        Button(
+                            onClick = {
+                                if (!isTimerActive) {
+                                    viewModel.setSessionMinutes(min)
+                                }
+                            },
+                            enabled = !isTimerActive,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isActive) DarkForestGreen else DarkSurfaceElevated,
+                                disabledContainerColor = DarkBackground
+                            ),
+                            border = BorderStroke(1.dp, if (isActive) DarkForestGreen else DarkBorder),
+                            shape = RoundedCornerShape(14.dp),
+                            modifier = Modifier.height(40.dp)
+                        ) {
+                            Text(
+                                text = "${min}m", 
+                                style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), 
+                                color = if (isActive) Color.White else MutedText
+                            )
+                        }
+                    }
+                }
+            }
 
-            // Presets row styled to sleek standards
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                val presets = listOf(25, 50, 90)
-                presets.forEach { min ->
-                    val isActive = selectedSessionMinutes == min
-                    Button(
-                        onClick = {
-                            if (!isTimerActive) {
-                                selectedSessionMinutes = min
-                                countdownSeconds = min * 60
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isActive) LightMintGreen else AccentGreen.copy(alpha = 0.15f)
-                        ),
-                        border = BorderStroke(1.dp, if (isActive) LightMintGreen else AccentGreen.copy(alpha = 0.35f)),
-                        shape = RoundedCornerShape(12.dp)
+            // Dynamic Intelligent Random Hour Selector
+            OutlinedButton(
+                onClick = { viewModel.rollSmartSessionMinutes(selectedTask) },
+                enabled = !isTimerActive,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = DarkForestGreen
+                ),
+                border = BorderStroke(1.dp, AccentGreen),
+                shape = RoundedCornerShape(24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(44.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "Roll Random",
+                        tint = AccentGreen
+                    )
+                    Text(
+                        text = "ROLL DYNAMIC TIME LIMIT (MAX 120M)",
+                        style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
+                        color = DarkForestGreen
+                    )
+                }
+            }
+
+            // Custom Direct Numeric Minute Entry Box & Tactical Slider Control
+            Card(
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    Text(
+                        text = "TACTILE SCROLL OVERLAY (MAX 120M)",
+                        style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
+                        color = DarkForestGreen
+                    )
+
+                    // Intuitively shows current value as slider drags
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "${min}m", 
-                            style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), 
-                            color = if (isActive) DarkForestGreen else WhiteText
+                            text = "Current Value:",
+                            style = Typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                            color = MutedText
                         )
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(DarkBackground)
+                                .padding(horizontal = 10.dp, vertical = 4.dp)
+                        ) {
+                            Text(
+                                text = "${selectedSessionMinutes} Minutes",
+                                style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                                color = AccentGreen
+                            )
+                        }
+                    }
+
+                    Slider(
+                        value = selectedSessionMinutes.toFloat().coerceIn(1f, 120f),
+                        onValueChange = { val mins = it.toInt().coerceIn(1, 120)
+                            viewModel.setSessionMinutes(mins)
+                        },
+                        valueRange = 1f..120f,
+                        colors = SliderDefaults.colors(
+                            thumbColor = AccentGreen,
+                            activeTrackColor = AccentGreen,
+                            inactiveTrackColor = DarkBackground
+                        ),
+                        enabled = !isTimerActive,
+                        modifier = Modifier.fillMaxWidth().testTag("custom_timer_slider")
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text("1 Min", style = Typography.labelSmall, color = MutedText)
+                        Text("60 Min", style = Typography.labelSmall, color = MutedText)
+                        Text("120 Min", style = Typography.labelSmall, color = MutedText)
+                    }
+
+                    HorizontalDivider(color = DarkBorder, modifier = Modifier.padding(vertical = 2.dp))
+
+                    Text(
+                        text = "DIAL PRECISE COMPILATION DURATION",
+                        style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp),
+                        color = DarkForestGreen
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        OutlinedTextField(
+                            value = customMinInput,
+                            onValueChange = { customMinInput = it },
+                            placeholder = { Text("E.g., 55", color = MutedText.copy(alpha = 0.5f), fontSize = 12.sp) },
+                            singleLine = true,
+                            textStyle = Typography.bodyMedium.copy(color = WhiteText),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = WhiteText,
+                                unfocusedTextColor = WhiteText,
+                                focusedBorderColor = AccentGreen,
+                                unfocusedBorderColor = DarkBorder
+                            ),
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(50.dp),
+                            shape = RoundedCornerShape(14.dp),
+                            enabled = !isTimerActive
+                        )
+                        Button(
+                            onClick = {
+                                val mins = customMinInput.toIntOrNull()
+                                if (mins != null && mins in 1..120) {
+                                    viewModel.setSessionMinutes(mins)
+                                    customMinInput = ""
+                                } else {
+                                    viewModel.showToast("Enter minutes between 1 and 120")
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = DarkForestGreen),
+                            modifier = Modifier.height(50.dp),
+                            shape = RoundedCornerShape(14.dp),
+                            enabled = !isTimerActive
+                        ) {
+                            Text("SET", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
+                        }
                     }
                 }
             }
         }
 
+        Spacer(modifier = Modifier.height(6.dp))
+
+        // Active Controls Panel Row
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -1944,51 +2390,51 @@ fun FocusScreen(viewModel: CompoundViewModel) {
             if (isTimerActive) {
                 Button(
                     onClick = {
-                        isTimerActive = false
-                        countdownSeconds = selectedSessionMinutes * 60
-                        viewModel.showToast("Focus cancelled. Timer reset.")
+                        viewModel.cancelTimer()
+                        viewModel.showToast("Focus aborted. Countdown reset.")
                     },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(containerColor = DangerRed),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(16.dp)
                 ) {
-                    Text("CANCEL TIMER", style = Typography.labelSmall, color = WhiteText)
+                    Text("ABORT TIMER", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                 }
                 Button(
-                    onClick = { isTimerActive = false },
+                    onClick = { viewModel.pauseTimer() },
                     modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(containerColor = LightMintGreen),
-                    shape = RoundedCornerShape(12.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = AccentGreen),
+                    shape = RoundedCornerShape(16.dp)
                 ) {
-                    Text("PAUSE TIMER", style = Typography.labelSmall, color = DarkForestGreen)
+                    Text("PAUSE RUN", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                 }
             } else {
                 Button(
                     onClick = {
-                        isTimerActive = true
+                        viewModel.startTimer()
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = LightMintGreen),
-                    shape = RoundedCornerShape(12.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = DarkForestGreen),
+                    shape = RoundedCornerShape(16.dp)
                 ) {
-                    Text("START STUDY TIMER", style = Typography.labelSmall, color = DarkForestGreen)
+                    Text("START BACKGROUND STUDY TIMER", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                 }
             }
         }
     }
 
+    // Task Selection dialogue
     if (showTaskSelectorDropdown) {
         Dialog(onDismissRequest = { showTaskSelectorDropdown = false }) {
             Card(
-                colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
-                border = BorderStroke(1.dp, LightMintGreen),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(modifier = Modifier.padding(20.dp)) {
                     Text(
-                        "SELECT FOCUS TASK",
-                        style = Typography.labelLarge,
-                        color = LightMintGreen,
+                        text = "SELECT FOCUS TARGET",
+                        style = Typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                        color = DarkForestGreen,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -1996,7 +2442,7 @@ fun FocusScreen(viewModel: CompoundViewModel) {
 
                     if (incompleteTasks.isEmpty()) {
                         Text(
-                            "No tasks logged. Complete focus standalone or create a task in PLANNER.",
+                            text = "No tasks registered. Create a task in PLANNER first.",
                             style = Typography.bodyMedium,
                             color = MutedText,
                             textAlign = TextAlign.Center
@@ -2005,16 +2451,17 @@ fun FocusScreen(viewModel: CompoundViewModel) {
                         Button(
                             onClick = { showTaskSelectorDropdown = false },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = AccentGreen)
+                            colors = ButtonDefaults.buttonColors(containerColor = DarkForestGreen),
+                            shape = RoundedCornerShape(12.dp)
                         ) {
-                            Text("OK", style = Typography.labelSmall)
+                            Text("OK", style = Typography.labelSmall, color = Color.White)
                         }
                     } else {
                         LazyColumn(modifier = Modifier.height(200.dp)) {
                             items(incompleteTasks) { task ->
                                 Text(
                                     text = task.title,
-                                    style = Typography.bodyLarge,
+                                    style = Typography.bodyLarge.copy(fontSize = 15.sp),
                                     color = WhiteText,
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -2022,10 +2469,50 @@ fun FocusScreen(viewModel: CompoundViewModel) {
                                             viewModel.setSelectedFocusTask(task)
                                             showTaskSelectorDropdown = false
                                         }
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(vertical = 14.dp, horizontal = 8.dp)
                                 )
-                                Divider(color = AccentGreen.copy(alpha = 0.5f))
+                                Divider(color = DarkBorder)
                             }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Category Selection dialogue
+    if (showCategorySelectorDropdown) {
+        Dialog(onDismissRequest = { showCategorySelectorDropdown = false }) {
+            Card(
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp)
+            ) {
+                Column(modifier = Modifier.padding(20.dp)) {
+                    Text(
+                        text = "SELECT STANDALONE SYSTEM",
+                        style = Typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                        color = DarkForestGreen,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    LazyColumn(modifier = Modifier.height(200.dp)) {
+                        items(defaultCategories) { cat ->
+                            Text(
+                                text = cat,
+                                style = Typography.bodyLarge.copy(fontSize = 15.sp),
+                                color = WhiteText,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        viewModel.setSelectedTimerCategory(cat)
+                                        showCategorySelectorDropdown = false
+                                    }
+                                    .padding(vertical = 14.dp, horizontal = 8.dp)
+                            )
+                            Divider(color = DarkBorder)
                         }
                     }
                 }
@@ -2051,18 +2538,21 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
             Text(
-                "SYSTEM CONFIG CONTROL PANEL",
-                style = Typography.labelLarge,
-                color = LightMintGreen
+                text = "SYSTEM CONFIG CONTROL",
+                style = Typography.labelLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.8.sp
+                ),
+                color = DarkForestGreen
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "Modify baseline variables, target parameters, or wipe state.",
+                text = "Modify core parameters, change motivation presets, or wipe execution database archives.",
                 style = Typography.bodyMedium,
                 color = MutedText
             )
@@ -2070,12 +2560,13 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
 
         item {
             Card(
-                colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
-                border = BorderStroke(1.dp, AccentGreen),
-                shape = RoundedCornerShape(12.dp)
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text("IDENTITY MOTIVATIONAL PRESET", style = Typography.labelMedium, color = LightMintGreen)
+                Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text("IDENTITY MOTIVATION PRESET", style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold), color = DarkForestGreen)
 
                     motivationQuotes.forEach { q ->
                         val isSelected = settings.selectedQuotePreset == q
@@ -2083,21 +2574,25 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable { viewModel.updateQuotePreset(q) }
-                                .padding(vertical = 8.dp),
+                                .padding(vertical = 10.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(q, style = Typography.bodyLarge, color = if (isSelected) LightMintGreen else WhiteText)
+                            Text(
+                                text = q, 
+                                style = Typography.bodyLarge.copy(fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal), 
+                                color = if (isSelected) AccentGreen else WhiteText
+                            )
                             RadioButton(
                                 selected = isSelected,
                                 onClick = { viewModel.updateQuotePreset(q) },
                                 colors = RadioButtonDefaults.colors(
-                                    selectedColor = LightMintGreen,
-                                    unselectedColor = MutedText
+                                    selectedColor = AccentGreen,
+                                    unselectedColor = DarkBorder
                                 )
                             )
                         }
-                        Divider(color = AccentGreen.copy(alpha = 0.3f))
+                        HorizontalDivider(color = DarkBorder)
                     }
                 }
             }
@@ -2105,19 +2600,20 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
 
         item {
             Card(
-                colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
-                border = BorderStroke(1.dp, AccentGreen),
-                shape = RoundedCornerShape(12.dp)
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
+                border = BorderStroke(1.dp, DarkBorder),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("TARGET STUDY DEADLINE", style = Typography.labelMedium, color = LightMintGreen)
-                    Spacer(modifier = Modifier.height(8.dp))
+                Column(modifier = Modifier.padding(20.dp)) {
+                    Text("TARGET DURATION DEADLINE", style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold), color = DarkForestGreen)
+                    Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        "Set targeted study dates countdown metrics.",
+                        text = "Establish target calendar metrics for automated countdown displays.",
                         style = Typography.bodyMedium,
                         color = MutedText
                     )
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(14.dp))
 
                     var targetInput by remember { mutableStateOf(settings.examTargetDate) }
                     Row(
@@ -2129,9 +2625,10 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
                             value = targetInput,
                             onValueChange = { targetInput = it },
                             modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = LightMintGreen,
-                                unfocusedBorderColor = AccentGreen,
+                                focusedBorderColor = AccentGreen,
+                                unfocusedBorderColor = DarkBorder,
                                 focusedTextColor = WhiteText,
                                 unfocusedTextColor = WhiteText
                             ),
@@ -2139,10 +2636,11 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
                         )
                         Button(
                             onClick = { viewModel.updateExamTargetDate(targetInput) },
-                            colors = ButtonDefaults.buttonColors(containerColor = LightMintGreen),
-                            shape = RoundedCornerShape(8.dp)
+                            colors = ButtonDefaults.buttonColors(containerColor = DarkForestGreen),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.height(50.dp)
                         ) {
-                            Text("SAVE", style = Typography.labelSmall, color = DarkForestGreen)
+                            Text("SAVE", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                         }
                     }
                 }
@@ -2153,24 +2651,27 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
                 border = BorderStroke(1.dp, DangerRed.copy(alpha = 0.5f)),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("RESET ALL DATA", style = Typography.labelMedium, color = DangerRed)
-                    Spacer(modifier = Modifier.height(4.dp))
+                Column(modifier = Modifier.padding(20.dp)) {
+                    Text("RESTORE SYSTEM DEFAULTS (WIPE)", style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold), color = DangerRed)
+                    Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        "Deletes all recorded app data including journal logs, planned tasks, and focus timers.",
+                        text = "Irreversibly cleans structural data models including daily ship checklists, habit configurations, timer entries, and journal reports.",
                         style = Typography.bodyMedium,
                         color = MutedText
                     )
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(14.dp))
                     Button(
                         onClick = { showWipeConfirm = true },
                         colors = ButtonDefaults.buttonColors(containerColor = DangerRed),
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
+                        shape = RoundedCornerShape(14.dp)
                     ) {
-                        Text("RESET ALL APP DATA", style = Typography.labelSmall, color = WhiteText)
+                        Text("RESET CONSOLE DATA ENGINE", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                     }
                 }
             }
@@ -2180,19 +2681,20 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
     if (showWipeConfirm) {
         Dialog(onDismissRequest = { showWipeConfirm = false }) {
             Card(
-                colors = CardDefaults.cardColors(containerColor = DarkForestGreen),
+                colors = CardDefaults.cardColors(containerColor = DarkSurfaceElevated),
                 border = BorderStroke(1.dp, DangerRed),
-                shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.padding(16.dp)
+                shape = RoundedCornerShape(24.dp),
+                modifier = Modifier.padding(16.dp),
+                elevation = CardDefaults.cardElevation(8.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("CONFIRM RESET", style = Typography.labelLarge, color = DangerRed)
+                    Text("CONFIRM TOTAL PURGE", style = Typography.labelLarge.copy(fontWeight = FontWeight.Bold), color = DangerRed)
                     Text(
-                        "This irreversible action resets Tasks, Journal entries, Focus times, and clears the 90-day progress map.",
+                        text = "This process is permanent. Resets your Planner targets, logged execution sheets, 90-day progress benchmarks, and experience scores.",
                         style = Typography.bodyMedium,
                         color = WhiteText,
                         textAlign = TextAlign.Center
@@ -2200,13 +2702,13 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         TextButton(
                             onClick = { showWipeConfirm = false },
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("CANCEL", style = Typography.labelSmall, color = MutedText)
+                            Text("ABORT", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = MutedText)
                         }
                         Button(
                             onClick = {
@@ -2214,9 +2716,10 @@ fun SettingsScreen(viewModel: CompoundViewModel) {
                                 showWipeConfirm = false
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = DangerRed),
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(12.dp)
                         ) {
-                            Text("PURGE", style = Typography.labelSmall, color = WhiteText)
+                            Text("PURGE ALL", style = Typography.labelSmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
                         }
                     }
                 }
