@@ -180,5 +180,3 @@ To execute the unit and Robolectric tests:
 gradle :app:testDebugUnitTest
 ```
 
----
-*Note: The images on the free tier quota limit were temporarily bypassed during the current workspace generation turn. High fidelity SVG and text outlines are embedded above to preserve pixel-perfect UI positioning details.*
