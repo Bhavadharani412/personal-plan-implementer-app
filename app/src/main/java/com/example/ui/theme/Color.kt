@@ -2,17 +2,35 @@ package com.example.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Bhava 3.0 Warm Soft Premium Minimalist Palette (Notion, Linear & Headspace-inspired)
-val DarkBackground = Color(0xFFF5F1EA)       // Soft Ivory Linen backdrop
-val DarkSurfaceElevated = Color(0xFFFFFFFF)  // Pure White floating cards
-val DarkForestGreen = Color(0xFF473C33)      // Primary Deep Espresso Coffee
-val AccentGreen = Color(0xFF2E8C87)          // Core Active Muted Teal
-val LightMintGreen = Color(0xFF473C33)       // Secondary interactive actions (Deep Espresso)
-val GoldXPAccent = Color(0xFFE8C074)         // Dynamic warm golden sand accent
-val SuccessGreen = Color(0xFFAFC28A)         // Soft Sage Green success state checked
-val DangerRed = Color(0xFFD6696B)            // Warm Coral Red warn/abort toggle
+val Purple80 = Color(0xFFD0BCFF)
+val PurpleGrey80 = Color(0xFFCCC2DC)
+val Pink80 = Color(0xFFEFB8C8)
 
-// Readable high contrast modern typography and alignment borders
-val WhiteText = Color(0xFF473C33)            // Deep Charcoal / Coffee espresso primary body text
-val MutedText = Color(0xFF7A6F66)            // Soft neutral Sand Taupe secondary captions
-val DarkBorder = Color(0xFFE7DED2)           // Minimalistic subtle ivory dividers
+val Purple40 = Color(0xFF6650a4)
+val PurpleGrey40 = Color(0xFF625b71)
+val Pink40 = Color(0xFF7D5260)
+
+// SkillOS Color Guidelines
+val ColorBackground = Color(0xFFF8F7F4)
+val ColorCard = Color(0xFFFFFFFF)
+val ColorSecondaryBg = Color(0xFFF4F1EA)
+
+// Palette Colors
+val SkillLavender = Color(0xFFDBC0E8)
+val SkillSkyBlue = Color(0xFFA3C1E2)      // Learning
+val SkillDaffodil = Color(0xFFF7E289)     // Career
+val SkillPeach = Color(0xFFFBB28B)        // Freelancing
+val SkillPoppy = Color(0xFFF76F54)
+val SkillSage = Color(0xFFAEB29A)
+val SkillFuchsia = Color(0xFFEA5E86)      // Personal Growth
+val SkillTeal = Color(0xFF47B5A8)         // Projects
+val SkillCottonCandy = Color(0xFFF9A2C5)
+val SkillMutedEggplant = Color(0xFF6B515E)
+val SkillNightTime = Color(0xFF252D45)
+
+// Domain mappings
+val ColorLearning = SkillSkyBlue
+val ColorProjects = SkillTeal
+val ColorCareer = SkillDaffodil
+val ColorFreelancing = SkillPeach
+val ColorPersonalGrowth = SkillFuchsia

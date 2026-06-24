@@ -1,6 +1,6 @@
 {
-  "name": "Bhava 3.0",
-  "description": "Simple and sleek personal focus, streak, and journal tracking system.",
+  "name": "SkillOS",
+  "description": "SkillOS - A time-first personal operating system for tracking learning, projects, freelancing, career preparation, and skill growth.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

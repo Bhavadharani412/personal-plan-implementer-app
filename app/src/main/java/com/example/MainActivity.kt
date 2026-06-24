@@ -4,21 +4,28 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.lifecycle.ViewModelProvider
-import com.example.ui.CompoundApp
-import com.example.ui.CompoundViewModel
-import com.example.ui.theme.CompoundOSTheme
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ui.screens.SkillOSDashboard
+import com.example.ui.theme.ColorBackground
+import com.example.ui.theme.MyApplicationTheme
+import com.example.ui.viewmodel.SkillOSViewModel
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
-    
-    val viewModel = ViewModelProvider(this)[CompoundViewModel::class.java]
-    
     setContent {
-      CompoundOSTheme {
-        CompoundApp(viewModel = viewModel)
+      MyApplicationTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = ColorBackground
+        ) {
+          val vm: SkillOSViewModel = viewModel()
+          SkillOSDashboard(viewModel = vm)
+        }
       }
     }
   }

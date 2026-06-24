@@ -1,9 +1,9 @@
 package com.example
 
-import androidx.compose.material3.Text
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
-import com.example.ui.theme.CompoundOSTheme
+import androidx.compose.ui.unit.sp
+import com.example.ui.theme.MyApplicationTheme
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule
@@ -22,7 +22,7 @@ class GreetingScreenshotTest {
 
   @Test
   fun greeting_screenshot() {
-    composeTestRule.setContent { CompoundOSTheme { Text("CompoundOS Command Frame") } }
+    composeTestRule.setContent { MyApplicationTheme { androidx.compose.material3.Text("SkillOS Workspace Active", style = androidx.compose.ui.text.TextStyle(fontSize = 24.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, color = com.example.ui.theme.SkillNightTime)) } }
 
     composeTestRule.onRoot().captureRoboImage(filePath = "src/test/screenshots/greeting.png")
   }

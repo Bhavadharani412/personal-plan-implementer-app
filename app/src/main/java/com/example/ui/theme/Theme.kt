@@ -1,33 +1,45 @@
 package com.example.ui.theme
 
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = LightMintGreen,
-    onPrimary = DarkForestGreen,
-    secondary = AccentGreen,
-    onSecondary = WhiteText,
-    tertiary = GoldXPAccent,
-    background = DarkBackground,
-    onBackground = WhiteText,
-    surface = DarkSurfaceElevated,
-    onSurface = WhiteText,
-    error = DangerRed,
-    onError = WhiteText,
-    surfaceVariant = DarkSurfaceElevated,
-    onSurfaceVariant = MutedText,
-    outline = DarkBorder
-)
+private val DarkColorScheme =
+  darkColorScheme(
+    primary = SkillSkyBlue,
+    secondary = SkillTeal,
+    tertiary = SkillLavender,
+    background = SkillNightTime,
+    surface = Color(0xFF1E2436),
+    onBackground = Color(0xFFF8F7F4),
+    onSurface = Color(0xFFF8F7F4)
+  )
+
+private val LightColorScheme =
+  lightColorScheme(
+    primary = SkillNightTime,
+    secondary = SkillTeal,
+    tertiary = SkillLavender,
+    background = ColorBackground,
+    surface = ColorCard,
+    onBackground = SkillNightTime,
+    onSurface = SkillNightTime
+  )
 
 @Composable
-fun CompoundOSTheme(
-    content: @Composable () -> Unit
+fun MyApplicationTheme(
+  darkTheme: Boolean = false, // Force custom light theme by default as specified in user prompt (White cards on warm bg)
+  dynamicColor: Boolean = false, // Disable system dynamic color overrides to preserve our brand palette
+  content: @Composable () -> Unit,
 ) {
-    MaterialTheme(
-        colorScheme = DarkColorScheme,
-        typography = Typography,
-        content = content
-    )
+  val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+
+  MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
 }
