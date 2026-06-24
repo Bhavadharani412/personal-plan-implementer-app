@@ -1,21 +1,201 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# SkillOS
 
-# Run and deploy your AI Studio app
+SkillOS is a time-first personal operating system for students, self-learners, freelancers, and career-focused professionals.
 
-This contains everything you need to run your app locally.
+The app helps users organize learning plans, subjects, topics, goals, and study sessions while tracking actual time spent learning and building skills.
 
-View your app in AI Studio: https://ai.studio/apps/3fa39550-103b-4d5f-ad1b-6dadd6108773
+## Features
 
-## Run Locally
+### Learning Management
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+* Create long-term learning plans
+* Organize skills into categories
+* Create subjects under categories
+* Break subjects into actionable topics
+* Track topic completion progress
 
+### Focus Session Timer
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+* Start learning sessions for any topic
+* Pause and resume active sessions
+* Persistent timer state
+* Session duration tracking
+
+### Goal Tracking
+
+* Set learning goals
+* Track target study minutes
+* Monitor progress across subjects
+
+### Analytics Dashboard
+
+* View study activity
+* Track learning consistency
+* Measure time invested in skill development
+
+### Offline First
+
+* Local Room database storage
+* No internet connection required
+* Fast and reliable data access
+
+---
+
+## Tech Stack
+
+### Android
+
+* Kotlin
+* Jetpack Compose
+* Material 3
+
+### Architecture
+
+* MVVM Architecture
+* Repository Pattern
+* StateFlow
+* Coroutines
+
+### Data Layer
+
+* Room Database
+* DAO Pattern
+* Reactive Flows
+
+---
+
+## Database Entities
+
+### Plan
+
+Represents a learning roadmap with start and end dates.
+
+### Category
+
+Top-level skill grouping.
+
+Examples:
+
+* Programming
+* Freelancing
+* Career Preparation
+* Communication
+
+### Subject
+
+A focused learning area inside a category.
+
+Examples:
+
+* Android Development
+* Data Structures
+* UI/UX Design
+
+### Topic
+
+Individual learning units inside a subject.
+
+Examples:
+
+* Room Database
+* Dependency Injection
+* Compose Navigation
+
+### Session
+
+Stores completed focus sessions and learning time.
+
+### Goal
+
+Tracks target learning minutes.
+
+### Resource
+
+Stores learning references such as:
+
+* Articles
+* Documentation
+* GitHub repositories
+* Videos
+* PDFs
+
+### Note
+
+Topic-specific notes and knowledge capture.
+
+---
+
+## Project Structure
+
+```text
+app/
+├── data/
+│   ├── dao/
+│   ├── database/
+│   ├── entity/
+│   └── repository/
+├── ui/
+│   ├── screens/
+│   ├── theme/
+│   └── viewmodel/
+└── MainActivity.kt
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+* Android Studio Hedgehog or newer
+* Android SDK
+* JDK 17
+
+### Installation
+
+```bash
+git clone https://github.com/Bhavadharani412/personal-plan-implementer-app.git
+cd personal-plan-implementer-app
+```
+
+Open the project in Android Studio and allow Gradle sync to complete.
+
+### Run
+
+1. Connect an Android device or start an emulator.
+2. Build the project.
+3. Run the application.
+
+---
+
+## Current Capabilities
+
+* Learning plan management
+* Category management
+* Subject management
+* Topic management
+* Goal management
+* Session timer
+* Room database persistence
+* Dashboard analytics
+
+---
+
+## Future Roadmap
+
+* Cloud sync
+* Backup and restore
+* AI learning assistant
+* Smart recommendations
+* Productivity insights
+* Calendar integration
+* Streak tracking
+* Habit system
+* Export reports
+* Cross-device synchronization
+
+---
+
+## Vision
+
+SkillOS aims to become a personal operating system for skill development by helping users intentionally invest time, track progress, and build career-ready expertise through structured learning.
